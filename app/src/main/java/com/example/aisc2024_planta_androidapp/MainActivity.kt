@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import com.example.aisc2024_planta_androidapp.home.HomeScreen
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 import com.example.aisc2024_planta_androidapp.login.LoginScreen
+import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -20,11 +21,8 @@ class MainActivity : ComponentActivity() {
         setContent{
             // Correct usage
             AISC2024_Planta_AndroidAppTheme {
-                HomeScreen()
+                ScanScreen()
             }
         }
     }
-
-
 }
-
