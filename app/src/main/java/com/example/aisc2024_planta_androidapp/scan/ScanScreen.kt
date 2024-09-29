@@ -1,6 +1,7 @@
 package com.example.aisc2024_planta_androidapp.scan
 
 import android.app.Activity
+import android.util.Log
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -50,6 +51,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -70,7 +72,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -79,11 +80,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.aisc2024_planta_androidapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScanScreen(modifier: Modifier = Modifier) {
+fun ScanScreen(
+    onScanClicked: () -> Unit,
+    onDiagnoseClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     // make status bar icons white
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -93,7 +99,7 @@ fun ScanScreen(modifier: Modifier = Modifier) {
             WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = false
         }
     }
-    Box {
+    Box(modifier) {
         CameraPreviewScreen(modifier = Modifier.fillMaxSize())
         // The cropped overlay thing
         val topInsets = WindowInsets.statusBars.getTop(LocalDensity.current)
@@ -167,11 +173,11 @@ fun ScanScreen(modifier: Modifier = Modifier) {
                 }
                 Spacer(Modifier.height(24.dp))
 
+                var selectedIndex by remember { mutableIntStateOf(0) }
                 // Mode toggle
                 Row(horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    var selectedIndex by remember { mutableIntStateOf(0) }
                     val options = listOf("Thông tin cây", "Chuẩn đoán bệnh")
                     SingleChoiceSegmentedButtonRow(modifier = Modifier
                         .fillMaxWidth()
@@ -194,7 +200,17 @@ fun ScanScreen(modifier: Modifier = Modifier) {
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(64.dp)) {
+                    IconButton(
+                        onClick = {
+                            if (selectedIndex == 0) {
+                                onScanClicked()
+                            }
+                            else {
+                                onDiagnoseClicked()
+                            }
+                        },
+                        modifier = Modifier.size(64.dp)
+                    ) {
                         Icon(painter = painterResource(R.drawable.snap),
                             contentDescription = "snap button",
                             tint = colorScheme.onPrimary,
@@ -205,12 +221,6 @@ fun ScanScreen(modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun a() {
-
 }
 
 @Composable
@@ -254,6 +264,12 @@ fun CameraPreviewScreen(modifier: Modifier = Modifier) {
     var preview by remember { mutableStateOf<androidx.camera.core.Preview?>(null) }
 
     var lensFacing by remember { mutableIntStateOf(CameraSelector.LENS_FACING_BACK) }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            cameraProvider.unbindAll() // Unbind all use cases before navigating away
+        }
+    }
 
     AndroidView(
         factory = { ctx ->
