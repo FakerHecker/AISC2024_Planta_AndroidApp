@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -158,12 +160,37 @@ fun HomeScreen() {
         NewsSection()
 
         // Recommendations
-        Text(
-            text = "Gợi ý cho bạn",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Gợi ý cho bạn",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF005200),
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+//            Box(
+//                modifier = Modifier
+//                    .padding(16.dp)
+//                    .clickable(
+//                        onClick = {
+//                        },
+//                        indication = null,
+//                        interactionSource = remember { MutableInteractionSource() })
+//                    .background(Color.Transparent)
+//                    .offset(x = (16).dp),
+//            ) {
+//                Text(
+//                    text = "Xem tất cả",
+//                    fontSize = 20.sp,
+//                    fontWeight = FontWeight.Bold,
+//                    color = Color(0xFF059710)
+//                )
+//            }
+        }
         Recommendations()
     }
 }
@@ -396,22 +423,115 @@ fun NewsItem(title: String) {
 
 @Composable
 fun Recommendations() {
-    Column {
-        // Example recommendations
-        RecommendationItem("Cây đuôi công", "45 ngày")
-        RecommendationItem("Cây đuôi công", "45 ngày")
+    Column (
+        verticalArrangement = Arrangement.spacedBy(18.dp)
+    ) {
+        Row  (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ){
+            // Example recommendations
+            RecommendationItem("Cây đuôi công", "45 ngày")
+            RecommendationItem("Cây đuôi công", "45 ngày")
+        }
+        Row  (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ){
+            // Example recommendations
+            RecommendationItem("Cây đuôi công", "45 ngày")
+            RecommendationItem("Cây đuôi công", "45 ngày")
+        }
+        Row  (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ){
+            // Example recommendations
+            RecommendationItem("Cây đuôi công", "45 ngày")
+            RecommendationItem("Cây đuôi công", "45 ngày")
+        }
     }
 }
 
 @Composable
 fun RecommendationItem(name: String, duration: String) {
-    Row(
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .clickable(onClick = {})
+            .width(180.dp)
+            .height(275.dp)
+            .clip(RoundedCornerShape(6.dp)),
+        border = BorderStroke(
+            1.66.dp, Color(0xFFCAE0CD)
+        )
     ) {
-        Text(text = name, modifier = Modifier.weight(1f))
-        Text(text = duration, modifier = Modifier.weight(1f))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            //plant iamge
+            Image(
+                painter = painterResource(id = R.drawable.plant_image),
+                contentDescription = "Recommend Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .clip(RoundedCornerShape(4.dp)),
+                contentScale = ContentScale.Crop
+            )
+            //title & tag
+            Column(
+            ) {
+                Text(
+                    text = "Cây đuôi cong",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF005200)
+                )
+                Text(
+                    text = "Trong nhà · Trang trí",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF005200)
+                )
+            }
+            //author
+            Row (
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(0.dp, 0.dp, 4.dp, 0.dp)
+            ) {
+                Text(
+                    text = "45 ngày",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF04CB010)
+                )
+                Box(
+                    modifier = Modifier
+                        .border(
+                            border = BorderStroke(0.5.dp, Color(0xFFCAE0CD)),  // Độ dày và màu sắc của viền
+                            shape = CircleShape  // Hình dạng viền là hình tròn
+                        )
+                        .padding(8.dp)  // Khoảng cách giữa icon và viền
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.potted_plant),
+                        contentDescription = "Recommend Icon",
+                        modifier = Modifier
+                            .size(25.dp),
+                        tint = Color(0xFF059710)
+                    )
+                }
+
+
+            }
+        }
+
     }
 }
