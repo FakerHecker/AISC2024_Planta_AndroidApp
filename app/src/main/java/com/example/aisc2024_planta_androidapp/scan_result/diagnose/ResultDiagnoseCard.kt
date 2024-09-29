@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.scan_result
+package com.example.aisc2024_planta_androidapp.scan_result.diagnose
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -9,14 +9,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
@@ -41,11 +43,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.scan_result.info.InfoCard
 import com.example.aisc2024_planta_androidapp.ui.layout_util.FixedGrid
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 
 @Composable
-fun ResultInfoCard(modifier: Modifier = Modifier) {
+fun ResultDiagnoseCard(modifier: Modifier = Modifier) {
     OutlinedCard(
         colors = CardDefaults.cardColors()
             .copy(containerColor = colorScheme.surfaceContainerHigh),
@@ -67,59 +70,75 @@ fun ResultInfoCard(modifier: Modifier = Modifier) {
             )
             Spacer(Modifier.height(20.dp))
             Text("Cây đuôi công", style = typography.titleLarge)
-            Spacer(Modifier.height(2.dp))
-            Text("(Calathea makoyana)", style = typography.bodyMedium)
+            Spacer(Modifier.height(8.dp))
+            SeverityCard()
             Spacer(Modifier.height(8.dp))
             Row {
                 Text("Danh mục:", style = typography.labelMedium)
                 Spacer(Modifier.width(4.dp))
-                Text("Trong nhà · Trang trí", style = typography.bodySmall)
+                Text("Bệnh thường gặp · Bệnh trên lá", style = typography.bodySmall)
             }
+            Spacer(Modifier.height(20.dp))
+            Text("Mô tả", style = typography.titleMedium)
             Spacer(Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("120,000₫", style = typography.headlineSmall.copy(
-                    brush = Brush.linearGradient(
-                        colors = listOf(Color(0xFF059710), Color(0xFF04CB01)),
-                    )
-                ))
-                var checked by remember { mutableStateOf(false) }
-                OutlinedIconToggleButton(
-                    checked = checked,
-                    onCheckedChange = { checked = it },
-                    // TODO: add checked color here
-                    colors = IconButtonDefaults.outlinedIconToggleButtonColors(),
-                    border = BorderStroke(1.dp, colorScheme.outline)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.FavoriteBorder,
-                        contentDescription = "Favorite"
-                    )
-                }
-            }
-            Spacer(Modifier.height(8.dp))
-            val cards: List<Triple<Painter, String, String>> = listOf(
-                Triple(painterResource(R.drawable.icon_sun), "Ánh sáng", "Bán phần"),
-                Triple(painterResource(R.drawable.icon_humidity_mid), "Độ ẩm", "50-60%"),
-                Triple(painterResource(R.drawable.icon_water), "Tưới nước", "2 ngày/lần"),
-                Triple(painterResource(R.drawable.icon_soil), "Bón phân", "3 tháng/lần")
+            Text(
+                "Bệnh đốm lá cây xuất hiện khi lá cây bị xuất hiện những đốm nhỏ có màu sắc, hình dáng và kích thước không đồng nhất. Phiến lá bị quăn lại, có các đốm màu nâu, đen, tím… Lá cũng khô héo và rụng, gây mất khả năng quang hợp và dẫn đến cái chết của cây.",
+                style = typography.bodySmall
             )
-            FixedGrid(columns = 2, itemCount = 4,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-            ) { index ->
-                val currentCard = cards[index]
-                InfoCard(
-                    icon = { Icon(
-                        painter = currentCard.first,
-                        contentDescription = null, modifier = it)
-                    },
-                    title = currentCard.second, subtitle = currentCard.third,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+
+            Spacer(Modifier.height(20.dp))
+            Text("Cách xử lý", style = typography.titleMedium)
+            Spacer(Modifier.height(12.dp))
+            InfoCard(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.ContentCut,
+                        contentDescription = null,
+                        modifier = it
+                    )
+                },
+                title = "Tỉa cành",
+                subtitle = "Cắt bỏ những lá bị sâu bệnh và tiến hành đốt chúng để phòng tránh loại bệnh thường gặp trên cây cảnh này."
+            )
+            Spacer(Modifier.height(12.dp))
+            InfoCard(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Spa,
+                        contentDescription = null,
+                        modifier = it
+                    )
+                },
+                title = "Phun thuốc",
+                subtitle = "Phun thuốc đều cả mặt trước và sau của lá cây cũng như thân và cành cây, định kỳ theo hướng dẫn của nhà sản xuất hoặc chuyên gia."
+            )
+
+            Spacer(Modifier.height(20.dp))
+            Text("Thuốc tham khảo", style = typography.titleMedium)
+            Spacer(Modifier.height(12.dp))
+            InfoCard(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Spa,
+                        contentDescription = null,
+                        modifier = it
+                    )
+                },
+                title = "Daconil 500SC",
+                subtitle = "Thuốc trừ nấm bệnh, tiếp xúc mạnh, trị bệnh và phòng trừ nhiều loại bệnh trên nhiều loại cây trồng khác nhau."
+            )
+            Spacer(Modifier.height(12.dp))
+            InfoCard(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Spa,
+                        contentDescription = null,
+                        modifier = it
+                    )
+                },
+                title = "Fovathane 80WP",
+                subtitle = "Thuốc trừ bệnh Fovathane là thuốc nội hấp, lưu dẫn cực mạnh trị nhiều loại bệnh trên nhiều loại cây trồng khác nhau."
+            )
         }
 
         // "Phu hop nhat" card
@@ -135,8 +154,8 @@ fun ResultInfoCard(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun ResultInfoPreview() {
+private fun ResultDiagPreview() {
     AISC2024_Planta_AndroidAppTheme {
-        ResultInfoCard()
+        ResultDiagnoseCard()
     }
 }
