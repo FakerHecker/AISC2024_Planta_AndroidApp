@@ -1,13 +1,13 @@
 package com.example.aisc2024_planta_androidapp.scan
 
 import android.app.Activity
-import android.util.Log
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,23 +28,14 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.EnergySavingsLeaf
-import androidx.compose.material.icons.outlined.EnergySavingsLeaf
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledIconToggleButton
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedIconButton
-import androidx.compose.material3.OutlinedIconToggleButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonColors
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
@@ -52,6 +43,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -70,6 +62,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
@@ -82,6 +75,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.ui.composable.LoadingPopup
+import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
+import kotlinx.coroutines.delay
+
+@Preview
+@Composable
+private fun SSP() {
+    AISC2024_Planta_AndroidAppTheme {
+        ScanScreen({}, {})
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -99,8 +103,23 @@ fun ScanScreen(
             WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = false
         }
     }
+
+    var selectedMode by remember { mutableIntStateOf(0) }
+    var showLoading by remember { mutableStateOf(false) }
+
+    LoadingPopup(label = "Đang quét hình ảnh...", isVisible = showLoading)
     Box(modifier) {
-        CameraPreviewScreen(modifier = Modifier.fillMaxSize())
+        Image(
+            painter = painterResource(
+                if (selectedMode == 0)
+                    R.drawable.plant_image
+                else R.drawable.sick_plant
+            ),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+//        CameraPreviewScreen(modifier = Modifier.fillMaxSize())
         // The cropped overlay thing
         val topInsets = WindowInsets.statusBars.getTop(LocalDensity.current)
         Canvas(modifier = Modifier.fillMaxSize()) {
@@ -173,7 +192,6 @@ fun ScanScreen(
                 }
                 Spacer(Modifier.height(24.dp))
 
-                var selectedIndex by remember { mutableIntStateOf(0) }
                 // Mode toggle
                 Row(horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
@@ -186,8 +204,8 @@ fun ScanScreen(
                             SegmentedButton(
                                 icon = { Icon(painter = painterResource(R.drawable.icon_leaf), contentDescription = null) },
                                 shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                                onClick = { selectedIndex = index },
-                                selected = index == selectedIndex
+                                onClick = { selectedMode = index },
+                                selected = index == selectedMode
                             ) {
                                 Text(label, style = typography.labelLarge)
                             }
@@ -195,6 +213,19 @@ fun ScanScreen(
                     }
                 }
 
+                val executor = ContextCompat.getMainExecutor(LocalContext.current)
+                LaunchedEffect(showLoading) {
+                    if (!showLoading) return@LaunchedEffect
+                    delay(3000)
+                    showLoading = false
+                    executor.execute {
+                        if (selectedMode == 0) {
+                            onScanClicked()
+                        } else {
+                            onDiagnoseClicked()
+                        }
+                    }
+                }
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
@@ -202,12 +233,7 @@ fun ScanScreen(
                 ) {
                     IconButton(
                         onClick = {
-                            if (selectedIndex == 0) {
-                                onScanClicked()
-                            }
-                            else {
-                                onDiagnoseClicked()
-                            }
+                            showLoading = true
                         },
                         modifier = Modifier.size(64.dp)
                     ) {
