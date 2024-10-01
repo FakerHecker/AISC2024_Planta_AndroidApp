@@ -55,7 +55,7 @@ fun ResultDiagnoseCard(modifier: Modifier = Modifier) {
                     .clip(RoundedCornerShape(8.dp))
             )
             Spacer(Modifier.height(20.dp))
-            Text("Cây đuôi công", style = typography.titleLarge)
+            Text("Bệnh đốm lá cây", style = typography.titleLarge)
             Spacer(Modifier.height(8.dp))
             SeverityCard()
             Spacer(Modifier.height(8.dp))
