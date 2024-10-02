@@ -46,7 +46,7 @@ fun ResultDiagnoseCard(modifier: Modifier = Modifier) {
                 .fillMaxWidth()) {
             // switch to horizontal pager
             Image(
-                painter = painterResource(R.drawable.plant_image),
+                painter = painterResource(R.drawable.plant_image_with_sick),
                 contentDescription = "Plant",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
