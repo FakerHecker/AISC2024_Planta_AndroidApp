@@ -111,9 +111,7 @@ fun ScanScreen(
     Box(modifier) {
         Image(
             painter = painterResource(
-                if (selectedMode == 0)
-                    R.drawable.plant_image
-                else R.drawable.sick_plant
+                R.drawable.fake_scanning_plant
             ),
             contentDescription = null,
             contentScale = ContentScale.Crop,
