@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.aisc2024_planta_androidapp.home.HomeScreen
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent{
             // Correct usage
             AISC2024_Planta_AndroidAppTheme {
-                AppMainScreen()
+                HomeScreen()
             }
         }
     }
