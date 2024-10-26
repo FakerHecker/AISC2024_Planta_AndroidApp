@@ -38,6 +38,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.ui.theme.onPrimaryLight
+import com.example.aisc2024_planta_androidapp.ui.theme.primaryLight
 
 @Composable
 fun LoginScreen() {
@@ -77,11 +79,11 @@ fun LoginScreen() {
                     // Login Form Components
                     Text(
                         text = "Đăng nhập",
-                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                        modifier = Modifier.padding(vertical = 16.dp)
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 24.sp),
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        color = primaryLight
                     )
                     LoginTextField(label = "Email hoặc số điện thoại", trailing = "", modifier = Modifier.fillMaxWidth())
-                    Spacer(modifier = Modifier.height(15.dp))
                     LoginTextField(label = "Mật khẩu", trailing = "", modifier = Modifier.fillMaxWidth())
                     // Add Checkbox for "Duy trì đăng nhập"
                     Row(
@@ -100,7 +102,7 @@ fun LoginScreen() {
                                 checked = rememberLogin,
                                 onCheckedChange = { rememberLogin = it },
                                 colors = CheckboxDefaults.colors(
-                                    checkedColor = Color.Green,
+                                    checkedColor = primaryLight,
                                     uncheckedColor = Color.Gray
                                 )
                             )
@@ -114,7 +116,7 @@ fun LoginScreen() {
                         }
                         Text(
                             text = "Quên mật khẩu?",
-                            color = Color.Green,
+                            color = primaryLight,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Medium
                         )
@@ -125,8 +127,8 @@ fun LoginScreen() {
                             .height(40.dp),
                         onClick = { /*TODO*/ },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Black.copy(0.6f),
-                            contentColor = Color.White
+                            containerColor = primaryLight,
+                            contentColor = onPrimaryLight
                         ),
                         shape = RoundedCornerShape(16.dp)
                     ) {
@@ -143,7 +145,7 @@ fun LoginScreen() {
                             containerColor = Color.White.copy(0.6f),
                             contentColor = Color.Black
                         ),
-                        border = BorderStroke(width = 1.dp, Color.Black)
+                        border = BorderStroke(width = 1.dp, Color.LightGray)
                     )
                     {
                         Text(
@@ -180,7 +182,7 @@ fun SignUpPrompt(
             style = MaterialTheme.typography.bodyMedium.copy(
                 fontWeight = FontWeight.Bold
             ),
-            color = Color.Green,
+            color = primaryLight,
             modifier = Modifier.clickable { onSignUpClick() }
         )
     }

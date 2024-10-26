@@ -721,8 +721,6 @@ fun RecommendationItem(name: String, duration: String) {
                         tint = Color(0xFF059710)
                     )
                 }
-
-
             }
         }
 
