@@ -1,5 +1,6 @@
 package com.example.aisc2024_planta_androidapp.home
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.HorizontalScrollView
 import android.widget.Toast
@@ -41,12 +42,143 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.aisc2024_planta_androidapp.AppRoute
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.login.LoginScreen
+import com.example.aisc2024_planta_androidapp.scan.ScanScreen
+import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
+import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun HomeMainScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
+) {
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(navController = navController)
+        }
+    ) {
+        Box(modifier = Modifier
+            .padding(bottom = 80.dp)
+            .background(Color.White)) {
+            AppNavHost(navController)
+        }
+    }
+}
+
+@Composable
+fun AppNavHost(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = AppRoute.HomeScreen.name
+    ) {
+        composable(AppRoute.HomeScreen.name) { HomeScreen() }
+        composable(AppRoute.Scan.name) { ScanScreen(
+            onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },
+            onDiagnoseClicked = { navController.navigate(AppRoute.ScanDiagnose.name) }
+        ) }
+        composable(AppRoute.Garden.name) {  }
+    }
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
+    val items = listOf(
+        BottomNavItem.Home,
+        BottomNavItem.Scan,
+        BottomNavItem.Garden
+    )
+
+    NavigationBar(
+        containerColor = Color.White,
+        contentColor = Color.Black
+    ) {
+        val navBackStackEntry = navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry.value?.destination?.route
+
+        items.forEach { item ->
+            NavigationBarItem(
+                icon = {
+                    if (item == BottomNavItem.Scan) {
+                        // Special styling for the middle button
+                        Box(
+                            modifier = Modifier
+                                .size(56.dp)
+                                .background(Color(0xFF4CAF50), CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(id = item.icon),
+                                contentDescription = item.title,
+                                tint = Color.White
+                            )
+                        }
+                    } else {
+                        Icon(
+                            painter = painterResource(id = item.icon),
+                            contentDescription = item.title,
+                            tint = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
+                        )
+                    }
+                },
+                label = {
+                    if (item != BottomNavItem.Scan) {
+                        Text(
+                            text = item.title,
+                            color = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
+                        )
+                    }
+                },
+                selected = currentRoute == item.route,
+                onClick = {
+                    when (item) {
+                        BottomNavItem.Home -> navController.navigate(AppRoute.HomeScreen.name) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                        BottomNavItem.Scan -> navController.navigate(AppRoute.Scan.name) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                        BottomNavItem.Garden -> navController.navigate(AppRoute.Garden.name) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                },
+                alwaysShowLabel = item != BottomNavItem.Scan // Hide the label for the middle button
+            )
+        }
+    }
+}
+
+sealed class BottomNavItem(val title: String, val icon: Int, val route: String) {
+    object Home : BottomNavItem("Trang chủ", R.drawable.icon_time, "home")
+    object Scan : BottomNavItem("", R.drawable.icon_uv, "scan")
+    object Garden : BottomNavItem("Vườn cây", R.drawable.icon_plant_outlined, "garden")
+}
+
 
 @Composable
 fun HomeScreen() {
     val scrollState = rememberScrollState()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -151,7 +283,7 @@ fun HomeScreen() {
 
         }
         DailyTasksSection()
-
+        Spacer(modifier = Modifier.size(8.dp))
         // News Section
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -389,6 +521,7 @@ fun DailyTasksSection() {
                 )
             }
             DailyTaskCard()
+            Spacer(modifier = Modifier.size(4.dp))
         }
     }
 }
@@ -460,7 +593,8 @@ fun DailyTaskItem(imageRes: Int, name: String, location: String, task: String, t
             )
             Spacer(modifier = Modifier.width(8.dp))
             Column(modifier = Modifier
-                .weight(1f).offset(y = 2.dp)) {
+                .weight(1f)
+                .offset(y = 2.dp)) {
                 Text(text = name, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.size(4.dp))
                 Text(text = location)
@@ -514,8 +648,6 @@ fun DailyTaskItem(imageRes: Int, name: String, location: String, task: String, t
         }
     }
 }
-
-
 
 @Composable
 fun NewsSection() {
@@ -726,3 +858,6 @@ fun RecommendationItem(name: String, duration: String) {
 
     }
 }
+
+
+

@@ -38,11 +38,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.home.HomeScreen
 import com.example.aisc2024_planta_androidapp.ui.theme.onPrimaryLight
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryLight
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    loginClicked: () -> Unit
+) {
     Surface {
         Box(modifier = Modifier.fillMaxSize()) {
             // Background Image
@@ -125,7 +128,7 @@ fun LoginScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(40.dp),
-                        onClick = { /*TODO*/ },
+                        onClick = {loginClicked()},
                         colors = ButtonDefaults.buttonColors(
                             containerColor = primaryLight,
                             contentColor = onPrimaryLight
