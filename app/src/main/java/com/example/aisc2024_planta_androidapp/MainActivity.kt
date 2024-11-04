@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.aisc2024_planta_androidapp.home.HomeMainScreen
+import com.example.aisc2024_planta_androidapp.login.LoginScreen
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
@@ -29,7 +31,8 @@ class MainActivity : ComponentActivity() {
 }
 
 enum class AppRoute {
-    Scan, ScanResult, ScanDiagnose
+    Login, Scan, ScanResult, ScanDiagnose,
+    HomeScreen, Garden
 }
 
 @Composable
@@ -39,9 +42,18 @@ fun AppMainScreen(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppRoute.Scan.name,
+        startDestination = AppRoute.Login.name,
         modifier = modifier
     ) {
+        composable(AppRoute.Login.name) {
+            LoginScreen(
+                loginClicked = {navController.navigate(AppRoute.HomeScreen.name)},
+            )
+        }
+        composable(AppRoute.HomeScreen.name) {
+            HomeMainScreen()
+        }
+
         composable(AppRoute.Scan.name) {
             ScanScreen(
                 onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },

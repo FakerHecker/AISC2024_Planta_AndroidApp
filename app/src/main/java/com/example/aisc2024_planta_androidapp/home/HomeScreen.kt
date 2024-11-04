@@ -1,5 +1,6 @@
 package com.example.aisc2024_planta_androidapp.home
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.HorizontalScrollView
 import android.widget.Toast
@@ -38,14 +39,146 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.aisc2024_planta_androidapp.AppRoute
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.login.LoginScreen
+import com.example.aisc2024_planta_androidapp.scan.ScanScreen
+import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
+import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun HomeMainScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
+) {
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(navController = navController)
+        }
+    ) {
+        Box(modifier = Modifier
+            .padding(bottom = 80.dp)
+            .background(Color.White)) {
+            AppNavHost(navController)
+        }
+    }
+}
+
+@Composable
+fun AppNavHost(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = AppRoute.HomeScreen.name
+    ) {
+        composable(AppRoute.HomeScreen.name) { HomeScreen() }
+        composable(AppRoute.Scan.name) { ScanScreen(
+            onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },
+            onDiagnoseClicked = { navController.navigate(AppRoute.ScanDiagnose.name) }
+        ) }
+        composable(AppRoute.Garden.name) {  }
+    }
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
+    val items = listOf(
+        BottomNavItem.Home,
+        BottomNavItem.Scan,
+        BottomNavItem.Garden
+    )
+
+    NavigationBar(
+        containerColor = Color.White,
+        contentColor = Color.Black
+    ) {
+        val navBackStackEntry = navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry.value?.destination?.route
+
+        items.forEach { item ->
+            NavigationBarItem(
+                icon = {
+                    if (item == BottomNavItem.Scan) {
+                        // Special styling for the middle button
+                        Box(
+                            modifier = Modifier
+                                .size(56.dp)
+                                .background(Color(0xFF4CAF50), CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(id = item.icon),
+                                contentDescription = item.title,
+                                tint = Color.White
+                            )
+                        }
+                    } else {
+                        Icon(
+                            painter = painterResource(id = item.icon),
+                            contentDescription = item.title,
+                            tint = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
+                        )
+                    }
+                },
+                label = {
+                    if (item != BottomNavItem.Scan) {
+                        Text(
+                            text = item.title,
+                            color = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
+                        )
+                    }
+                },
+                selected = currentRoute == item.route,
+                onClick = {
+                    when (item) {
+                        BottomNavItem.Home -> navController.navigate(AppRoute.HomeScreen.name) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                        BottomNavItem.Scan -> navController.navigate(AppRoute.Scan.name) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                        BottomNavItem.Garden -> navController.navigate(AppRoute.Garden.name) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                },
+                alwaysShowLabel = item != BottomNavItem.Scan // Hide the label for the middle button
+            )
+        }
+    }
+}
+
+sealed class BottomNavItem(val title: String, val icon: Int, val route: String) {
+    object Home : BottomNavItem("Trang chủ", R.drawable.icon_time, "home")
+    object Scan : BottomNavItem("", R.drawable.icon_uv, "scan")
+    object Garden : BottomNavItem("Vườn cây", R.drawable.icon_plant_outlined, "garden")
+}
+
 
 @Composable
 fun HomeScreen() {
     val scrollState = rememberScrollState()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,14 +227,63 @@ fun HomeScreen() {
         WeatherInfo()
 
         // Tasks for Today
-        Text(
-            text = "Nhiệm vụ trong ngày",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
-        TaskList()
+        Spacer(modifier = Modifier.padding(6.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Nhiệm vụ trong ngày",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF005200),
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable(
+                        onClick = {
+                        },
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() })
+                    .background(Color.Transparent)
+                    .offset(x = (16).dp),
+            ) {
+                Text(
+                    text = "Xem tất cả",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF059710)
+                )
+            }
+            /*//            TextButton(
+            //                onClick = {},
+            //                modifier = Modifier
+            //                    .background(Color.Transparent)
+            //                    .offset(x = (16).dp)
+            //                    .indication(
+            //                        interactionSource = remember { MutableInteractionSource() },
+            //                        indication = null
+            //                    ),
+            //                colors = ButtonDefaults.textButtonColors(
+            //                    containerColor = Color.Transparent,
+            //                    contentColor = Color(0xFF059710)
+            //                ),
+            //                shape = RectangleShape,
+            //                contentPadding = PaddingValues(15.dp, 12.dp),
+            //            ) {
+            //                Text(
+            //                    text = "Xem tất cả",
+            //                    fontSize = 20.sp,
+            //                    fontWeight = FontWeight.Bold
+            //                )
+            //            }*/
 
+        }
+        DailyTasksSection()
+        Spacer(modifier = Modifier.size(8.dp))
         // News Section
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -133,7 +315,7 @@ fun HomeScreen() {
                     color = Color(0xFF059710)
                 )
             }
-//            TextButton(
+/*//            TextButton(
 //                onClick = {},
 //                modifier = Modifier
 //                    .background(Color.Transparent)
@@ -154,7 +336,7 @@ fun HomeScreen() {
 //                    fontSize = 20.sp,
 //                    fontWeight = FontWeight.Bold
 //                )
-//            }
+//            }*/
         }
         Spacer(modifier = Modifier.padding(2.dp))
         NewsSection()
@@ -172,24 +354,24 @@ fun HomeScreen() {
                 color = Color(0xFF005200),
                 modifier = Modifier.padding(vertical = 16.dp)
             )
-//            Box(
-//                modifier = Modifier
-//                    .padding(16.dp)
-//                    .clickable(
-//                        onClick = {
-//                        },
-//                        indication = null,
-//                        interactionSource = remember { MutableInteractionSource() })
-//                    .background(Color.Transparent)
-//                    .offset(x = (16).dp),
-//            ) {
-//                Text(
-//                    text = "Xem tất cả",
-//                    fontSize = 20.sp,
-//                    fontWeight = FontWeight.Bold,
-//                    color = Color(0xFF059710)
-//                )
-//            }
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable(
+                        onClick = {
+                        },
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() })
+                    .background(Color.Transparent)
+                    .offset(x = (16).dp),
+            ) {
+                Text(
+                    text = "Xem tất cả",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF059710)
+                )
+            }
         }
         Recommendations()
     }
@@ -305,26 +487,165 @@ fun WeatherDetailItem(iconRes: Int, label: String, value: String) {
 }
 
 @Composable
-fun TaskList() {
-    Column {
-        // Example tasks
-        TaskItem("Cây đuôi công", "5 phút trước", "Tưới 500ml nước +2")
-        TaskItem("Cây đuôi công", "2:45 pm", "Tưới 500ml nước +2")
-        TaskItem("Cây đuôi công", "9:00 am", "Xới đất +2")
+fun DailyTasksSection() {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(1.dp, Color.LightGray, RoundedCornerShape(12.dp)),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+            )
+        ){
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFFCAE0CD)),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ){
+                Spacer(modifier = Modifier
+                    .size(2.dp)
+                    .background(Color(0xFFCAE0CD)))
+                Text(
+                    text = "Thứ 2",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = "21/08/2024",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color(0xFF4CAF50),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
+            DailyTaskCard()
+            Spacer(modifier = Modifier.size(4.dp))
+        }
     }
 }
 
 @Composable
-fun TaskItem(name: String, time: String, action: String) {
-    Row(
+fun DailyTaskCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+    ) {
+        Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+            Spacer(modifier = Modifier.size(8.dp))
+            DailyTaskItem(
+                imageRes = R.drawable.plant_image, // Replace with your plant image resource
+                name = "Cây đuôi công",
+                location = "Trong nhà",
+                task = "Tưới 500ml nước",
+                time = "5 phút trước",
+                taskIcon = R.drawable.icon_water, // Replace with appropriate icon
+                points = 2
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            DailyTaskItem(
+                imageRes = R.drawable.plant_image, // Replace with your plant image resource
+                name = "Cây đuôi công",
+                location = "Trong nhà",
+                task = "Tưới 500ml nước",
+                time = "2:45 pm",
+                taskIcon = R.drawable.icon_water, // Replace with appropriate icon
+                points = 2
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            DailyTaskItem(
+                imageRes = R.drawable.plant_image, // Replace with your plant image resource
+                name = "Cây đuôi công",
+                location = "Trong nhà",
+                task = "Xới đất",
+                time = "9:00 am",
+                taskIcon = R.drawable.icon_soil, // Replace with appropriate icon
+                points = 2
+            )
+        }
+    }
+}
+
+@Composable
+fun DailyTaskItem(imageRes: Int, name: String, location: String, task: String, time: String, taskIcon: Int, points: Int) {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .border(1.dp, Color.LightGray, RoundedCornerShape(12.dp))
     ) {
-        Text(text = name, modifier = Modifier.weight(1f))
-        Text(text = time, modifier = Modifier.weight(1f))
-        Text(text = action, modifier = Modifier.weight(1f))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(modifier = Modifier.size(4.dp))
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = "Plant Image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .border(1.dp, Color.Transparent)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Column(modifier = Modifier
+                .weight(1f)
+                .offset(y = 2.dp)) {
+                Text(text = name, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.size(4.dp))
+                Text(text = location)
+                Spacer(modifier = Modifier.size(4.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.icon_time),
+                        contentDescription = "Time Icon",
+                        modifier = Modifier.size(14.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = time, style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+        }
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(end = 8.dp, top = 8.dp),
+            horizontalAlignment = Alignment.End
+        ) {
+            // Top right circular icon button
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(48.dp)
+                    .background(color = Color(0xFFE8F5E9), shape = CircleShape)
+                    .border(width = 1.dp, color = Color.LightGray, shape = CircleShape)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_water), // Replace with your drop icon resource
+                    contentDescription = "Water Icon",
+                    tint = Color(0xFF4CAF50), // Green tint for the icon
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            // Task name, points, and icon
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = task, fontWeight = FontWeight.Light, fontSize = 12.sp) // Task name added here
+                Spacer(modifier = Modifier.size(3.dp))
+                Text(text = "+$points", color = Color(0xFF4CAF50), fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                Icon(
+                    painter = painterResource(id = taskIcon),
+                    contentDescription = "Task Icon",
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+        }
     }
 }
 
@@ -503,7 +824,8 @@ fun RecommendationItem(name: String, duration: String) {
             //author
             Row (
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(0.dp, 0.dp, 4.dp, 0.dp)
             ) {
                 Text(
@@ -515,7 +837,10 @@ fun RecommendationItem(name: String, duration: String) {
                 Box(
                     modifier = Modifier
                         .border(
-                            border = BorderStroke(0.5.dp, Color(0xFFCAE0CD)),  // Độ dày và màu sắc của viền
+                            border = BorderStroke(
+                                0.5.dp,
+                                Color(0xFFCAE0CD)
+                            ),  // Độ dày và màu sắc của viền
                             shape = CircleShape  // Hình dạng viền là hình tròn
                         )
                         .padding(8.dp)  // Khoảng cách giữa icon và viền
@@ -528,10 +853,11 @@ fun RecommendationItem(name: String, duration: String) {
                         tint = Color(0xFF059710)
                     )
                 }
-
-
             }
         }
 
     }
 }
+
+
+

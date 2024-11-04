@@ -219,15 +219,3 @@ val surfaceContainerLowDarkHighContrast = Color(0xFF161D14)
 val surfaceContainerDarkHighContrast = Color(0xFF1A2218)
 val surfaceContainerHighDarkHighContrast = Color(0xFF252C22)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF2F372C)
-
-val ColorScheme.focusedTextFieldText
-    @Composable
-    get() = Color.Black
-
-val ColorScheme.unfocusedTextFieldText
-    @Composable
-    get() = Color.White.copy(0.6f)
-
-val ColorScheme.textFieldContainer
-    @Composable
-    get() = Color.Black.copy(0.2f)
