@@ -7,7 +7,6 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -62,7 +61,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.clipPath
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
@@ -109,15 +107,7 @@ fun ScanScreen(
 
     LoadingPopup(label = "Đang quét hình ảnh...", isVisible = showLoading)
     Box(modifier) {
-        Image(
-            painter = painterResource(
-                R.drawable.fake_scanning_plant
-            ),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-//        CameraPreviewScreen(modifier = Modifier.fillMaxSize())
+        CameraPreviewScreen(modifier = Modifier.fillMaxSize())
         // The cropped overlay thing
         val topInsets = WindowInsets.statusBars.getTop(LocalDensity.current)
         Canvas(modifier = Modifier.fillMaxSize()) {
