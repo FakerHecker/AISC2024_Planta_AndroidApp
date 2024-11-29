@@ -16,6 +16,7 @@ import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAp
 import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
+import com.example.aisc2024_planta_androidapp.account.AccountScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +25,8 @@ class MainActivity : ComponentActivity() {
         setContent{
             // Correct usage
             AISC2024_Planta_AndroidAppTheme {
-                AppMainScreen()
+                // AppMainScreen()
+                AccountScreen()
             }
         }
     }
