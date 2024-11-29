@@ -59,7 +59,7 @@ fun ResultInfoCard(modifier: Modifier = Modifier) {
                 .fillMaxWidth()) {
             // switch to horizontal pager
             Image(
-                painter = painterResource(R.drawable.plant_image),
+                painter = painterResource(R.drawable.fake_result_plant),
                 contentDescription = "Plant",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -68,14 +68,14 @@ fun ResultInfoCard(modifier: Modifier = Modifier) {
                     .clip(RoundedCornerShape(8.dp))
             )
             Spacer(Modifier.height(20.dp))
-            Text("Cây đuôi công", style = typography.titleLarge)
+            Text("Cây đậu phộng", style = typography.titleLarge)
             Spacer(Modifier.height(2.dp))
-            Text("(Calathea makoyana)", style = typography.bodyMedium)
+            Text("(Goober peas)", style = typography.bodyMedium)
             Spacer(Modifier.height(8.dp))
             Row {
                 Text("Danh mục:", style = typography.labelMedium)
                 Spacer(Modifier.width(4.dp))
-                Text("Trong nhà · Trang trí", style = typography.bodySmall)
+                Text("Ngoài trời", style = typography.bodySmall)
             }
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween,
