@@ -1,6 +1,10 @@
 package com.example.aisc2024_planta_androidapp.scan
 
 import android.app.Activity
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -27,6 +31,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -75,6 +81,10 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.aisc2024_planta_androidapp.R
 import com.example.aisc2024_planta_androidapp.ui.composable.LoadingPopup
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import kotlinx.coroutines.delay
 
 @Preview
@@ -104,6 +114,19 @@ fun ScanScreen(
 
     var selectedMode by remember { mutableIntStateOf(0) }
     var showLoading by remember { mutableStateOf(false) }
+
+    // Photo picker
+    // Registers a photo picker activity launcher in single-select mode.
+    val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) { uri ->
+        // Callback is invoked after the user selects a media item or closes the
+        // photo picker.
+        // TODO: Handle the selected media item.
+        if (uri != null) {
+            Log.d("PhotoPicker", "Selected URI: $uri")
+        } else {
+            Log.d("PhotoPicker", "No media selected")
+        }
+    }
 
     LoadingPopup(label = "Đang quét hình ảnh...", isVisible = showLoading)
     Box(modifier) {
@@ -214,9 +237,9 @@ fun ScanScreen(
                         }
                     }
                 }
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
+
+                // Snap button and pick image
+                Box(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     IconButton(
@@ -224,12 +247,28 @@ fun ScanScreen(
                             showLoading = true
                         },
                         modifier = Modifier.size(64.dp)
+                            .align(Alignment.Center)
                     ) {
                         Icon(painter = painterResource(R.drawable.snap),
                             contentDescription = "snap button",
                             tint = colorScheme.onPrimary,
                             modifier = Modifier.fillMaxSize()
                         )
+                    }
+                    val context = LocalContext.current
+                    IconButton(
+                        onClick = {
+                            PickVisualMedia.isPhotoPickerAvailable(context)
+                            pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+                        },
+                        modifier = Modifier.size(54.dp)
+                            .align(Alignment.CenterStart)
+                    ) {
+                         Icon(painter = painterResource(R.drawable.photo_library),
+                             contentDescription = "pick image from library",
+                             tint = colorScheme.onPrimary,
+                             modifier = Modifier.fillMaxSize().padding(8.dp)
+                         )
                     }
                 }
             }
@@ -264,8 +303,43 @@ private fun StepIndicator(stepCount: String, text: String) {
     }
 }
 
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun CameraPreviewScreen(modifier: Modifier = Modifier) {
+    // Camera permission state
+    val cameraPermissionState = rememberPermissionState(
+        android.Manifest.permission.CAMERA
+    )
+
+    // TODO: add ask again mechanics
+
+    if (!cameraPermissionState.status.isGranted) {
+        val textToShow = if (cameraPermissionState.status.shouldShowRationale) {
+            // If the user has denied the permission but the rationale can be shown,
+            // then gently explain why the app requires this permission
+            "The camera is important for this app. Please grant the permission."
+        } else {
+            // If it's the first time the user lands on this feature, or the user
+            // doesn't want to be asked again for this permission, explain that the
+            // permission is required
+            "Camera permission required for this feature to be available. " +
+                    "Please grant the permission"
+        }
+        AlertDialog(
+            title = { Text("Camera permission required") },
+            text = { Text(textToShow) },
+            confirmButton = {
+                Button(
+                    onClick = { cameraPermissionState.launchPermissionRequest() }
+                ) {
+                    Text("Request permission")
+                }
+            },
+            onDismissRequest = {}
+        )
+        return
+    }
+
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
