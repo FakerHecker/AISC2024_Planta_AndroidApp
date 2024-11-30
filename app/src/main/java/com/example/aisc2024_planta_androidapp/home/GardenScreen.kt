@@ -9,38 +9,53 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.aisc2024_planta_androidapp.R
@@ -59,15 +74,17 @@ fun GardenScreen() {
 
         TaskSection()
 
-        Spacer(modifier =  Modifier.height(16.dp))
+        MyGardenSection()
+
+
     }
 }
 
 @Composable
 fun PremiumUpgradeCard(
     userName: String = "Plantie",
-    onCardClick: () -> Unit = {}, // Sự kiện khi bấm vào Card
-    onUpgradeClick: () -> Unit = {} // Sự kiện khi bấm vào nút "Nâng cấp ngay"
+    onCardClick: () -> Unit = {},
+    onUpgradeClick: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
@@ -76,8 +93,8 @@ fun PremiumUpgradeCard(
             .clickable { onCardClick() },
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, Color(0xFFCAE0CD)),
-        colors = CardDefaults.cardColors( // Thêm màu nền ở đây
-            containerColor = Color(0xFFFCFFF8) // Màu nền của Card
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFFCFFF8)
         ),
     ) {
         Row (
@@ -85,16 +102,14 @@ fun PremiumUpgradeCard(
                 .padding(10.dp),
             verticalAlignment = Alignment.Top
         ) {
-            // Biểu tượng ngôi sao
             Image(
-                painter = painterResource(id = R.drawable.icon_premium), // Đường dẫn PNG
+                painter = painterResource(id = R.drawable.icon_premium),
                 contentDescription = "Premium Icon",
                 modifier = Modifier.size(54.dp)
             )
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Nội dung
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "Hi $userName,",
@@ -109,16 +124,15 @@ fun PremiumUpgradeCard(
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color(0xFF005200)
                 )
-                // Nút nâng cấp
                 Row(
-                    modifier = Modifier.fillMaxWidth(), // Đảm bảo Row chiếm toàn bộ chiều rộng
-                    horizontalArrangement = Arrangement.End // Căn phải cho nội dung bên trong Row
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
                 ) {
                     Text(
                         text = "Nâng cấp ngay",
                         color = Color(0xFF059710),
                         style = MaterialTheme.typography.labelLarge,
-                        modifier = Modifier.padding(0.dp) // Đảm bảo không có padding cho text
+                        modifier = Modifier.padding(0.dp)
                     )
                 }
 
@@ -134,12 +148,14 @@ fun TaskCard(
     timeAgo: String,
     waterAmount: String,
     waterIconRes: Int,
-    plantImageRes: Int
+    plantImageRes: Int,
+    onCardClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp, horizontal = 8.dp),
+            .padding(vertical = 6.dp, horizontal = 8.dp)
+            .clickable { onCardClick },
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, Color(0xFFCAE0CD)),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFFCFFF8))
@@ -150,7 +166,6 @@ fun TaskCard(
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Hình ảnh cây
             Image(
                 painter = painterResource(id = plantImageRes),
                 contentDescription = "Plant Image",
@@ -162,10 +177,7 @@ fun TaskCard(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            // Nội dung cây
-            Column(
-                //modifier = Modifier.weight(1f)
-            ) {
+            Column {
                 Row (
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
@@ -186,18 +198,18 @@ fun TaskCard(
                     }
                     Box(
                         modifier = Modifier
-                            .size(48.dp) // Kích thước hình tròn 36x36
+                            .size(48.dp)
                             .background(
-                                color = Color(0xFFEBFEED), // Màu nền
-                                shape = CircleShape // Định dạng hình tròn
+                                color = Color(0xFFEBFEED),
+                                shape = CircleShape
                             )
                             .border(
-                                width = 1.dp, // Độ dày outline
-                                color = Color(0xFFCAE0CD), // Màu outline
-                                shape = CircleShape // Outline cũng hình tròn
+                                width = 1.dp,
+                                color = Color(0xFFCAE0CD),
+                                shape = CircleShape
                             )
                             .padding(8.dp) ,
-                        contentAlignment = Alignment.Center// Padding bên trong
+                        contentAlignment = Alignment.Center
                     ) {
                         Image(
                         painter = painterResource(id = R.drawable.ic_water_light),
@@ -285,37 +297,34 @@ fun TaskSection(){
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp), // Padding cho không gian ở 2 bên
+                        .padding(horizontal = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    // Nút trái
                     Box(
                         modifier = Modifier
-                            .size(40.dp) // Đường kính 40px
-                            .clip(CircleShape) // Hình tròn
-                            .border(1.dp, Color(0xFFCAE0CD), CircleShape) // Viền 1px màu #CAE0CD
-                            .background(Color.White) // Màu nền ban đầu
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, Color(0xFFCAE0CD), CircleShape)
+                            .background(Color.White)
                             .clickable(
                                 onClick = {
-                                    // Xử lý sự kiện click ở đây
                                 },
                                 indication = rememberRipple(
-                                    bounded = true, // Hiệu ứng sóng bị giới hạn trong vùng hình tròn
-                                    color = Color(0xFF059710).copy(alpha = 0.5f) // Màu sóng và độ mờ rõ hơn
+                                    bounded = true,
+                                    color = Color(0xFF059710).copy(alpha = 0.5f)
                                 ),
-                                interactionSource = remember { MutableInteractionSource() } // Tạo nguồn tương tác
+                                interactionSource = remember { MutableInteractionSource() }
                             ),
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_arrow_left), // Đổi với tài nguyên hình ảnh của bạn
+                            painter = painterResource(id = R.drawable.ic_arrow_left),
                             contentDescription = "Left Button",
-                            modifier = Modifier.size(12.dp) // Kích thước hình ảnh
+                            modifier = Modifier.size(12.dp)
                         )
                     }
 
-                    // Khối chứa text (Đoạn Text "Thứ 4" và "21/08/2024")
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(0.dp)
@@ -334,29 +343,27 @@ fun TaskSection(){
                         )
                     }
 
-                    // Nút phải
                     Box(
                         modifier = Modifier
-                            .size(40.dp) // Đường kính 40px
-                            .clip(CircleShape) // Hình tròn
-                            .border(1.dp, Color(0xFFCAE0CD), CircleShape) // Viền 1px màu #CAE0CD
-                            .background(Color.White) // Màu nền ban đầu
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, Color(0xFFCAE0CD), CircleShape)
+                            .background(Color.White)
                             .clickable(
                                 onClick = {
-                                    // Xử lý sự kiện click ở đây
                                 },
                                 indication = rememberRipple(
-                                    bounded = true, // Hiệu ứng sóng bị giới hạn trong vùng hình tròn
-                                    color = Color(0xFF059710).copy(alpha = 0.5f) // Màu sóng và độ mờ rõ hơn
+                                    bounded = true,
+                                    color = Color(0xFF059710).copy(alpha = 0.5f)
                                 ),
-                                interactionSource = remember { MutableInteractionSource() } // Tạo nguồn tương tác
+                                interactionSource = remember { MutableInteractionSource() }
                             ),
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_arrow_right), // Đổi với tài nguyên hình ảnh của bạn
+                            painter = painterResource(id = R.drawable.ic_arrow_right),
                             contentDescription = "Right Button",
-                            modifier = Modifier.size(12.dp) // Kích thước hình ảnh
+                            modifier = Modifier.size(12.dp)
                         )
                     }
                 }
@@ -372,43 +379,46 @@ fun TaskSection(){
                     plantStatus = "Trong nhà",
                     timeAgo = "5 phút trước",
                     waterAmount = "Tưới 500ml nước",
-                    waterIconRes = R.drawable.icon_time,  // Bạn thay thế bằng icon của mình
-                    plantImageRes = R.drawable.plant_image  // Thay thế với hình ảnh cây
+                    waterIconRes = R.drawable.icon_time,
+                    plantImageRes = R.drawable.plant_image,
+                    onCardClick = {}
                 )
                 TaskCard(
                     plantName = "Cây đuôi công",
                     plantStatus = "Trong nhà",
                     timeAgo = "5 phút trước",
                     waterAmount = "Tưới 500ml nước",
-                    waterIconRes = R.drawable.icon_time,  // Bạn thay thế bằng icon của mình
-                    plantImageRes = R.drawable.plant_image  // Thay thế với hình ảnh cây
+                    waterIconRes = R.drawable.icon_time,
+                    plantImageRes = R.drawable.plant_image,
+                    onCardClick = {}
                 )
                 TaskCard(
                     plantName = "Cây đuôi công",
                     plantStatus = "Trong nhà",
                     timeAgo = "5 phút trước",
                     waterAmount = "Tưới 500ml nước",
-                    waterIconRes = R.drawable.icon_time,  // Bạn thay thế bằng icon của mình
-                    plantImageRes = R.drawable.plant_image  // Thay thế với hình ảnh cây
+                    waterIconRes = R.drawable.icon_time,
+                    plantImageRes = R.drawable.plant_image,
+                    onCardClick = {}
                 )
                 TaskCard(
                     plantName = "Cây đuôi công",
                     plantStatus = "Trong nhà",
                     timeAgo = "5 phút trước",
                     waterAmount = "Tưới 500ml nước",
-                    waterIconRes = R.drawable.icon_time,  // Bạn thay thế bằng icon của mình
-                    plantImageRes = R.drawable.plant_image  // Thay thế với hình ảnh cây
+                    waterIconRes = R.drawable.icon_time,
+                    plantImageRes = R.drawable.plant_image,
+                    onCardClick = {}
                 )
             }
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 116.dp) // Điều chỉnh padding trái/phải để chiều rộng của nút chiếm 1/4
-                    .padding(top = 16.dp), // Khoảng cách giữa phần card và nút
+                    .padding(horizontal = 116.dp)
+                    .padding(top = 16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                // Sử dụng Box với Modifier.clickable để thay thế Button
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -416,16 +426,14 @@ fun TaskSection(){
                         .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
                         .border(1.dp, Color(0xFFCAE0CD), RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
                         .clickable(
-                            indication = rememberRipple(color = Color(0xFF4CAF50), bounded = true), // Tùy chỉnh màu ripple
-                            interactionSource = remember { MutableInteractionSource() } // Quản lý tương tác
+                            indication = rememberRipple(color = Color(0xFF4CAF50), bounded = true),
+                            interactionSource = remember { MutableInteractionSource() }
                         ) {
-                            // Xử lý sự kiện khi nhấn
-                            // Ví dụ: Mở rộng hoặc thực hiện hành động nào đó
                         },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Mở rộng", // Chữ "Mở rộng"
+                        text = "Mở rộng",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF005200),
@@ -433,11 +441,312 @@ fun TaskSection(){
                     )
                 }
             }
-
-
-
-
         }
     }
 }
+
+@Preview
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyPlantCard(modifier: Modifier = Modifier) {
+    val sheetState = rememberModalBottomSheetState()
+    var showBottomSheet by remember {
+        mutableStateOf(false)
+    }
+
+
+    OutlinedCard(
+        colors = CardDefaults.cardColors()
+            .copy(containerColor = colorScheme.surfaceContainerHigh),
+        modifier = modifier.clickable(onClick = {
+            showBottomSheet = true
+        })
+    ) {
+        Column(Modifier.padding(8.dp)) {
+            Image(
+                painter = painterResource(R.drawable.plant_image),
+                contentDescription = "plant image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .aspectRatio(1f)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+            )
+            Spacer(Modifier.height(8.dp))
+            Text("Cây đuôi công", style = typography.titleMedium, color = Color(0xFF005200))
+            Text("17/08/2024", style = typography.bodyMedium, color = Color(0xFF005200))
+            Spacer(Modifier.height(8.dp))
+            Row(horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column (
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Row (
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+
+                        Text("10", style = typography.titleMedium.copy(
+                            brush = Brush.linearGradient(listOf(
+                                Color(0xFF059710),
+                                Color(0xFF04CB01)
+                            )),
+                            fontWeight = FontWeight.Bold
+                        ))
+
+                        Text("/45 ngày", style = typography.titleSmall.copy(
+                            brush = Brush.linearGradient(listOf(
+                                Color(0xFF059710),
+                                Color(0xFF04CB01)
+                            )),
+                            fontWeight = FontWeight.Bold
+                        ))
+                    }
+                    LinearProgressIndicator(
+                        progress = 10f / 45f,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(4.dp)
+                            .clip(RoundedCornerShape(2.dp)),
+                        color = Color(0xFF059710),
+                        trackColor = Color(0xFFCAE0CD)
+                    )
+                }
+                OutlinedIconButton(onClick = { /*TODO*/ },
+                    border = BorderStroke(1.dp, Color(0xFFCAE0CD)),
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_heart),
+                        contentDescription = "View plant", // TODO: ??? check this
+                        modifier = Modifier.size(20.dp),
+                        tint = Color.Unspecified
+                    )
+                }
+            }
+        }
+    }
+
+    if(showBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showBottomSheet = false },
+            sheetState = sheetState,
+            containerColor = Color(0xFFF8F8F8)
+        ) {
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(18.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.plant_image),
+                        contentDescription = "Plant Image",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Column {
+                        Row (
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.Top,
+                            modifier = Modifier.fillMaxWidth().height(64.dp)
+                        ) {
+                            Column {
+                                Text(
+                                    text = "Cây đuôi công",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF005200)
+                                )
+                                Text(
+                                    text = "Trong nhà",
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF005200)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(2.dp)
+                        .drawBehind {
+                            drawLine(
+                                color = Color(0xFFCAE0CD),
+                                start = Offset(0f, size.height),
+                                end = Offset(size.width, size.height),
+                                strokeWidth = 2f
+                            )
+                        }
+                )
+                Column (
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
+
+                    BottomSheetItem(iconId = R.drawable.ic_filter_vintage, title = "Thông tin cây trồng", onClick = { })
+                    BottomSheetItem(iconId = R.drawable.ic_cancel, title = "Xóa cây trồng ra khỏi vườn", onClick = {})
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomSheetItem(iconId: Int, title: String, onClick: () -> Unit) {
+    val icon = painterResource(id = iconId)
+
+    Row (
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.clickable { onClick() }
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(4.dp))
+
+    ) {
+        Icon(painter = icon, contentDescription = null, modifier = Modifier.size(16.dp))
+        Text(
+            text = title,
+            color = Color(0xFF005200),
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+@Composable
+fun MyGardenSection() {
+    Column {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Vườn cây của tôi",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF005200),
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+            DropdownBox()
+        }
+
+        Column (
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                MyPlantCard(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                )
+                MyPlantCard(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                MyPlantCard(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                )
+                Spacer(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DropdownBox() {
+    val expanded = remember { mutableStateOf(false) }
+    val selectedOption = remember { mutableStateOf("Trong nhà") }
+    Box(
+        modifier = Modifier.padding(0.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .wrapContentSize()
+                .border(BorderStroke(1.dp, Color(0xFFCAE0CD)), shape = RoundedCornerShape(8.dp))
+                .background(Color(0xFFFDFFFA), shape = RoundedCornerShape(8.dp))
+                .clickable(onClick = { expanded.value = true })
+        ) {
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.padding(end = 14.dp)
+            ){
+                Text(
+                    text = selectedOption.value,
+                    fontSize = 12.sp,
+                    color = Color(0xFF005200),
+                    modifier = Modifier
+                        .padding(14.dp, 3.dp, 3.dp, 4.dp)
+                )
+                Image(
+                    painter = painterResource(R.drawable.ic_arrow_dropdown),
+                    contentDescription = "View plant", // TODO: ??? check this
+                    modifier = Modifier.size(8.dp),
+                )
+            }
+
+        }
+
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false },
+            modifier = Modifier
+                .background(Color(0xFFFDFFFA), shape = RoundedCornerShape(8.dp))
+                .border(BorderStroke(1.dp, Color(0xFFCAE0CD)))
+        ) {
+            DropdownMenuItem(
+                onClick = {
+                    selectedOption.value = "Trong nhà"
+                    expanded.value = false
+                },
+                text = {Text(text = "Trong nhà", color = Color(0xFF005200))}
+            )
+            DropdownMenuItem(
+                onClick = {
+                    selectedOption.value = "Ngoài trời"
+                    expanded.value = false
+                },
+                text = {Text(text = "Ngoài trời", color = Color(0xFF005200))}
+            )
+        }
+    }
+}
+
+
 
