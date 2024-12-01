@@ -78,21 +78,22 @@ fun BottomNavigationBar(navController: NavHostController) {
                         // Special styling for the middle button
                         Box(
                             modifier = Modifier
-                                .size(56.dp)
-                                .background(Color(0xFF4CAF50), CircleShape),
+                                .size(48.dp)
+                                .background(colorScheme.primary, CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(
+                            Image(
                                 painter = painterResource(id = item.icon),
                                 contentDescription = item.title,
-                                tint = Color.White
+                                modifier = Modifier.size(24.dp)
                             )
                         }
                     } else {
                         Icon(
                             painter = painterResource(id = item.icon),
                             contentDescription = item.title,
-                            tint = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
+                            modifier = Modifier.size(24.dp),
+                            tint = if (currentRoute == item.route) colorScheme.primary else colorScheme.onSurfaceVariant
                         )
                     }
                 },
@@ -100,7 +101,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                     if (item != BottomNavItem.Scan) {
                         Text(
                             text = item.title,
-                            color = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
+                            color = if (currentRoute == item.route) colorScheme.primary else colorScheme.onSurfaceVariant
                         )
                     }
                 },

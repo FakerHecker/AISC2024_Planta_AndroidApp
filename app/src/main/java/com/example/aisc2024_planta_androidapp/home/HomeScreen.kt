@@ -70,7 +70,7 @@ fun HomeMainScreen(
     ) {
         Box(modifier = Modifier
             .padding(bottom = 80.dp)
-            .background(Color.White)) {
+            .background(colorScheme.surface)) {
             HomeScreenNavHost(navController)
         }
     }

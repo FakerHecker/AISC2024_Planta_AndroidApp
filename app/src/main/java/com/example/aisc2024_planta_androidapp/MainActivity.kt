@@ -26,8 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent{
             // Correct usage
             AISC2024_Planta_AndroidAppTheme {
-                // AppMainScreen()
-                HomeScreen()
+                AppMainScreen()
             }
         }
     }
