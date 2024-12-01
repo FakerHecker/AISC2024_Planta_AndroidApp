@@ -1,7 +1,6 @@
 package com.example.aisc2024_planta_androidapp.account
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -126,7 +125,7 @@ fun StatsSection() {
         {
             // Clickable
         }
-        StatCard("Tích điểm", "1,200", "Tìm thêm điểm >", R.drawable.img_points, R.drawable.small)
+        StatCard("Tích điểm", "1,200", "Tìm thêm điểm >", R.drawable.img_points, R.drawable.ic_point)
         {
             // Clickable
         }

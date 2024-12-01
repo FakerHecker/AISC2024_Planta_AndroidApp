@@ -57,60 +57,47 @@ import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Composable
-fun HomeMainScreen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
-) {
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(navController = navController)
-        }
-    ) {
-        Box(modifier = Modifier
-            .padding(bottom = 80.dp)
-            .background(Color.White)) {
-            HomeScreenNavHost(navController)
-        }
-    }
-}
 
 @Composable
-fun HomeScreen() {
-    val scrollState = rememberScrollState()
-    Column(
+fun DailyTaskCard() {
+    val scrollState = rememberScrollState();
+    Box(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp)
+            .fillMaxWidth().background(colorScheme.surface)
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
-        HeaderHomeScreen()
-        Spacer(modifier = Modifier.height(4.dp))
-        SearchBarHomeScreen()
-        Text(
-            text = "Thời tiết hôm nay",
-            style = MaterialTheme.typography.titleMedium,
-            color = colorScheme.onSurface,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
-        // Weather Info
-        WeatherInfo()
-        // Tasks for Today
-        Spacer(modifier = Modifier.padding(8.dp))
-        HeaderSection("Nhiệm vụ trong ngày")
-        Spacer(modifier = Modifier.padding(2.dp))
-        DailyTasksSection()
-        Spacer(modifier = Modifier.size(8.dp))
-        HeaderSection("Tin tức mới")
-        Spacer(modifier = Modifier.padding(2.dp))
-        NewsSection()
-        HeaderSection("Gợi ý cho bạn")
-        Recommendations()
+        Column(modifier = Modifier
+            .padding(horizontal = 8.dp)) {
+            Spacer(modifier = Modifier.size(8.dp))
+            DailyTaskItem(
+                imageRes = R.drawable.plant_image, // Replace with your plant image resource
+                name = "Cây đuôi công",
+                location = "Trong nhà",
+                task = "Tưới 500ml nước",
+                time = "5 phút trước",
+                taskIcon = R.drawable.icon_water, // Replace with appropriate icon
+                points = 2
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            DailyTaskItem(
+                imageRes = R.drawable.plant_image, // Replace with your plant image resource
+                name = "Cây đuôi công",
+                location = "Trong nhà",
+                task = "Tưới 500ml nước",
+                time = "2:45 pm",
+                taskIcon = R.drawable.icon_water, // Replace with appropriate icon
+                points = 2
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            DailyTaskItem(
+                imageRes = R.drawable.plant_image, // Replace with your plant image resource
+                name = "Cây đuôi công",
+                location = "Trong nhà",
+                task = "Xới đất",
+                time = "9:00 am",
+                taskIcon = R.drawable.ic_scissor, // Replace with appropriate icon
+                points = 2
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+        }
     }
 }
-
-
-

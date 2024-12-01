@@ -28,7 +28,6 @@ import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -57,60 +57,45 @@ import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeMainScreen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
-) {
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(navController = navController)
-        }
+fun HeaderHomeScreen(){
+    Row(
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(modifier = Modifier
-            .padding(bottom = 80.dp)
-            .background(Color.White)) {
-            HomeScreenNavHost(navController)
-        }
-    }
-}
-
-@Composable
-fun HomeScreen() {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp)
-    ) {
-        Spacer(modifier = Modifier.height(30.dp))
-        HeaderHomeScreen()
-        Spacer(modifier = Modifier.height(4.dp))
-        SearchBarHomeScreen()
-        Text(
-            text = "Thời tiết hôm nay",
-            style = MaterialTheme.typography.titleMedium,
-            color = colorScheme.onSurface,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 16.dp)
+        // Icon profile
+        Image(
+            painter = painterResource(id = R.drawable.container_profile),
+            contentDescription = "User Profile",
+            modifier = Modifier.size(40.dp)
         )
-        // Weather Info
-        WeatherInfo()
-        // Tasks for Today
-        Spacer(modifier = Modifier.padding(8.dp))
-        HeaderSection("Nhiệm vụ trong ngày")
-        Spacer(modifier = Modifier.padding(2.dp))
-        DailyTasksSection()
-        Spacer(modifier = Modifier.size(8.dp))
-        HeaderSection("Tin tức mới")
-        Spacer(modifier = Modifier.padding(2.dp))
-        NewsSection()
-        HeaderSection("Gợi ý cho bạn")
-        Recommendations()
+        Spacer(modifier = Modifier.size(10.dp))
+        // Text Header
+        Text(
+            text = "Chào Plantie 🍀",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = colorScheme.onSurface,
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .weight(1f)
+        )
+        // Notification icon
+        Image(
+            painter = painterResource(id = R.drawable.ic_notifications_2),
+            contentDescription = "Notification Icon",
+
+            modifier = Modifier
+                .size(56.dp)
+                .padding(top = 8.dp)
+        )
+        // Message icon
+        Image(
+            painter = painterResource(id = R.drawable.ic_message),
+            contentDescription = "Notification Icon",
+
+            modifier = Modifier
+                .size(56.dp)
+                .padding(top = 8.dp)
+        )
     }
 }
-
-
-

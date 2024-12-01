@@ -57,60 +57,44 @@ import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeMainScreen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
-) {
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(navController = navController)
-        }
-    ) {
-        Box(modifier = Modifier
-            .padding(bottom = 80.dp)
-            .background(Color.White)) {
-            HomeScreenNavHost(navController)
+fun DailyTasksSection() {
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(1.dp, colorScheme.outline, RoundedCornerShape(16.dp)),
+            colors = CardDefaults.cardColors(
+                containerColor = colorScheme.outline,
+            )
+        ){
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ){
+                Spacer(modifier = Modifier
+                    .size(8.dp))
+                Text(
+                    text = "Thứ 2",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = "21/08/2024",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = colorScheme.primary,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier
+                    .size(8.dp))
+            }
+            HorizontalDivider(thickness = 1.dp)
+            DailyTaskCard()
         }
     }
 }
-
-@Composable
-fun HomeScreen() {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp)
-    ) {
-        Spacer(modifier = Modifier.height(30.dp))
-        HeaderHomeScreen()
-        Spacer(modifier = Modifier.height(4.dp))
-        SearchBarHomeScreen()
-        Text(
-            text = "Thời tiết hôm nay",
-            style = MaterialTheme.typography.titleMedium,
-            color = colorScheme.onSurface,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
-        // Weather Info
-        WeatherInfo()
-        // Tasks for Today
-        Spacer(modifier = Modifier.padding(8.dp))
-        HeaderSection("Nhiệm vụ trong ngày")
-        Spacer(modifier = Modifier.padding(2.dp))
-        DailyTasksSection()
-        Spacer(modifier = Modifier.size(8.dp))
-        HeaderSection("Tin tức mới")
-        Spacer(modifier = Modifier.padding(2.dp))
-        NewsSection()
-        HeaderSection("Gợi ý cho bạn")
-        Recommendations()
-    }
-}
-
-
-
