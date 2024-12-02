@@ -310,11 +310,11 @@ fun TaskSection(){
                             .clickable(
                                 onClick = {
                                 },
-                                indication = rememberRipple(
+                               /* indication = rememberRipple(
                                     bounded = true,
                                     color = Color(0xFF059710).copy(alpha = 0.5f)
-                                ),
-                                interactionSource = remember { MutableInteractionSource() }
+                                ),*/
+                                // interactionSource = remember { MutableInteractionSource() }
                             ),
                         contentAlignment = Alignment.Center
                     ) {
@@ -352,11 +352,11 @@ fun TaskSection(){
                             .clickable(
                                 onClick = {
                                 },
-                                indication = rememberRipple(
+                                /*indication = rememberRipple(
                                     bounded = true,
                                     color = Color(0xFF059710).copy(alpha = 0.5f)
                                 ),
-                                interactionSource = remember { MutableInteractionSource() }
+                                interactionSource = remember { MutableInteractionSource() }*/
                             ),
                         contentAlignment = Alignment.Center
                     ) {
@@ -426,8 +426,8 @@ fun TaskSection(){
                         .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
                         .border(1.dp, Color(0xFFCAE0CD), RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
                         .clickable(
-                            indication = rememberRipple(color = Color(0xFF4CAF50), bounded = true),
-                            interactionSource = remember { MutableInteractionSource() }
+                        /*    indication = rememberRipple(color = Color(0xFF4CAF50), bounded = true),
+                            interactionSource = remember { MutableInteractionSource() }*/
                         ) {
                         },
                     contentAlignment = Alignment.Center

@@ -58,7 +58,7 @@ import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDia
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
 @Composable
-fun WeatherDetailItem(iconRes: Int, label: String, value: String) {
+fun WeatherDetailItem(iconRes: Int, label: String, value: String, color: Color) {
     Card(
         modifier = Modifier
             .size(width = 122.dp, height = 36.dp),
@@ -67,11 +67,20 @@ fun WeatherDetailItem(iconRes: Int, label: String, value: String) {
         Row(
 
         ) {
-            Image(
-                painter = painterResource(id = iconRes),
-                contentDescription = label,
-                modifier = Modifier.size(36.dp) // Adjust icon size
-            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(36.dp)
+                    .background(color = color.copy(0.2f), shape = CircleShape)
+                    .border(width = 1.dp, color = colorScheme.surfaceContainer, shape = CircleShape)
+            ) {
+                Icon(
+                    painter = painterResource(id = iconRes), // Replace with your drop icon resource
+                    contentDescription = "Water Icon",
+                    tint = color,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
             Spacer(modifier = Modifier.size(8.dp))
             Column() {
                 Text(text = label,

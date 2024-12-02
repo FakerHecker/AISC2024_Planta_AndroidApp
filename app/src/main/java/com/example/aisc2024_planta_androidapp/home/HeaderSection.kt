@@ -45,7 +45,7 @@ fun HeaderSection(stringHeader: String)
                     onClick = {},
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() })
-                .offset(x = (16).dp, y = 4.dp),
+                .offset(x = (16).dp, y = 0.dp),
         ) {
             Text(
                 text = "Xem tất cả",

@@ -67,6 +67,6 @@ fun HomeScreenNavHost(navController: NavHostController) {
             onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },
             onDiagnoseClicked = { navController.navigate(AppRoute.ScanDiagnose.name) }
         ) }
-        composable(AppRoute.Garden.name) {  }
+        composable(AppRoute.Garden.name) { GardenScreen() }
     }
 }

@@ -86,8 +86,8 @@ fun LoginScreen(
                         modifier = Modifier.padding(vertical = 4.dp),
                         color = primaryLight
                     )
-                    LoginTextField(label = "Email hoặc số điện thoại", trailing = "", modifier = Modifier.fillMaxWidth())
-                    LoginTextField(label = "Mật khẩu", trailing = "", modifier = Modifier.fillMaxWidth())
+                    // LoginTextField(label = "Email hoặc số điện thoại", trailing = "", modifier = Modifier.fillMaxWidth())
+                    // LoginTextField(label = "Mật khẩu", trailing = "", modifier = Modifier.fillMaxWidth())
                     // Add Checkbox for "Duy trì đăng nhập"
                     Row(
                         modifier = Modifier

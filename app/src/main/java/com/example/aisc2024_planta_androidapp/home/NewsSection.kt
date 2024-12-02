@@ -13,7 +13,7 @@ fun NewsSection() {
     val scrollState = rememberScrollState()
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(14.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.horizontalScroll(scrollState)
     ) {
         // Example news items

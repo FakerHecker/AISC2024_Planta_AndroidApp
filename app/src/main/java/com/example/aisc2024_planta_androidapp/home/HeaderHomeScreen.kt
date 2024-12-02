@@ -36,8 +36,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -66,7 +68,10 @@ fun HeaderHomeScreen(){
         Image(
             painter = painterResource(id = R.drawable.container_profile),
             contentDescription = "User Profile",
-            modifier = Modifier.size(40.dp)
+
+            modifier = Modifier
+                .size(40.dp)
+                .clip(RoundedCornerShape(40.dp))
         )
         Spacer(modifier = Modifier.size(10.dp))
         // Text Header
@@ -76,26 +81,25 @@ fun HeaderHomeScreen(){
             fontWeight = FontWeight.Bold,
             color = colorScheme.onSurface,
             modifier = Modifier
-                .padding(top = 8.dp)
+                .padding()
                 .weight(1f)
         )
         // Notification icon
-        Image(
-            painter = painterResource(id = R.drawable.ic_notifications_2),
+        Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_notification),
             contentDescription = "Notification Icon",
-
             modifier = Modifier
-                .size(56.dp)
-                .padding(top = 8.dp)
+                .size(24.dp),
+            tint = colorScheme.onSurface
         )
+        Spacer(modifier = Modifier.size(22.dp))
         // Message icon
-        Image(
-            painter = painterResource(id = R.drawable.ic_message),
+        Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_message),
             contentDescription = "Notification Icon",
-
             modifier = Modifier
-                .size(56.dp)
-                .padding(top = 8.dp)
+                .size(24.dp),
+            tint = colorScheme.onSurface
         )
     }
 }

@@ -1,33 +1,70 @@
 package com.example.aisc2024_planta_androidapp.account
 
+import android.annotation.SuppressLint
+import android.util.Log
+import android.widget.HorizontalScrollView
+import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Message
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.aisc2024_planta_androidapp.AppRoute
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.login.LoginScreen
+import com.example.aisc2024_planta_androidapp.scan.ScanScreen
+import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
+import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
 @Composable
 fun AccountScreen() {
     Surface {
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
             ProfileHeader()
             Spacer(modifier = Modifier.height(16.dp))
@@ -69,7 +106,7 @@ fun ProfileHeader() {
                 modifier = Modifier
                     .size(80.dp)
                     .clip(CircleShape)
-                    .border(2.dp, Color.White, CircleShape)
+                    .border(4.dp, Color.White, CircleShape)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text("Plantie", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
@@ -107,7 +144,7 @@ fun ProfileHeader() {
                 .size(42.dp)
                 .align(Alignment.TopEnd)
                 .offset(x = (-16).dp, y = 216.dp)
-                .clickable {  }
+                .clickable { }
                 // Add background color to see if it's rendering
         )
     }
@@ -214,29 +251,51 @@ fun StatCard(
 
 @Composable
 fun UtilitiesSection() {
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        Text("Tiện ích", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(8.dp))
-        FeatureItem("Vườn cây của tôi", "6 cây trồng", R.drawable.ic_plant)
-        HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
-        FeatureItem("Danh sách yêu thích", "5 cây trồng", R.drawable.ic_favourite)
-        HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
-        FeatureItem("Lịch sử chăm cây", "24 lượt chăm cây", R.drawable.ic_history)
+    Text(
+        text = "Tiện ích",
+        color = colorScheme.onSurfaceVariant,
+        style = typography.labelLarge,
+        fontWeight = FontWeight.Normal
+    )
+    Spacer(modifier = Modifier.size(8.dp))
+    Card (modifier = Modifier
+        .fillMaxWidth()
+        .border(1.dp, colorScheme.outline, RoundedCornerShape(8.dp))
+        .background(colorScheme.surfaceContainerHigh))
+    {
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            FeatureItem("Vườn cây của tôi", "6 cây trồng", R.drawable.ic_plant)
+            HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
+            FeatureItem("Danh sách yêu thích", "5 cây trồng", R.drawable.ic_favourite)
+            HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
+            FeatureItem("Lịch sử chăm cây", "24 lượt chăm cây", R.drawable.ic_history)
+        }
     }
 }
 
 @Composable
 fun SettingsSection() {
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        Text("Cài đặt", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(8.dp))
-        SettingItem("Cài đặt thông báo", R.drawable.ic_notifications)
-        HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
-        SettingItem("Thông tin ứng dụng", R.drawable.ic_info)
-        HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
-        SettingItem("Trung tâm trợ giúp", R.drawable.ic_help)
-        HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
-        SettingItem("Quản lý tài khoản", R.drawable.ic_account)
+    Text(
+        text = "Cài đặt",
+        color = colorScheme.onSurfaceVariant,
+        style = typography.labelLarge,
+        fontWeight = FontWeight.Normal
+    )
+    Spacer(modifier = Modifier.size(8.dp))
+    Card (modifier = Modifier
+        .fillMaxWidth()
+        .border(1.dp, colorScheme.outline, RoundedCornerShape(8.dp))
+        .background(colorScheme.surfaceContainerHigh))
+    {
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            FeatureItem("Cài đặt thông báo","Tùy chỉnh thông báo ", R.drawable.ic_notifications)
+            HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
+            FeatureItem("Thông tin ứng dụng", "Phiên bản • Cập nhật", R.drawable.ic_info)
+            HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
+            FeatureItem("Trung tâm trợ giúp", "Câu hỏi thường gặp • Mạng xã hội", R.drawable.ic_help)
+            HorizontalDivider(modifier = Modifier.padding(vertical = 0.dp))
+            FeatureItem("Quản lý tài khoản", "Bảo mật • Thiết lập tài khoản", R.drawable.ic_account)
+        }
     }
 }
 
@@ -247,65 +306,21 @@ fun LogoutButton() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)) // Green button
+        colors = ButtonDefaults.buttonColors(containerColor = colorScheme.surfaceContainer) // Green button
     ) {
-        Text("Đăng xuất", color = Color.White, fontSize = 16.sp)
-    }
-}
-
-@Composable
-fun SettingItem(title: String, iconRes: Int) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-            .clickable { /* Handle Click */ },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Feature Icon
-        Image(
-            painter = painterResource(id = iconRes), // Replace with your drawable resource
-            contentDescription = title, // Accessibility description
-            modifier = Modifier.size(36.dp) // Set the size of the image
+        Icon(painter = painterResource(id = R.drawable.ic_logout),
+            contentDescription = "Log out",
+            modifier = Modifier.size(24.dp),
+            tint = colorScheme.onSurfaceVariant)
+        Spacer(modifier = Modifier.size(8.dp))
+        Text(
+            text = "Đăng xuất",
+            color = colorScheme.onSurfaceVariant,
+            style = typography.labelLarge,
+            fontWeight = FontWeight.Normal
         )
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(text = title, fontSize = 16.sp, fontWeight = FontWeight.Medium)
     }
 }
 
-@Composable
-fun FeatureItem(title: String, subtitle: String, iconRes: Int) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-            .clickable { /* Handle Click */ },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Feature Icon
-        Image(
-            painter = painterResource(id = iconRes), // Replace with your drawable resource
-            contentDescription = title, // Accessibility description
-            modifier = Modifier.size(36.dp) // Set the size of the image
-        )
 
-        Spacer(modifier = Modifier.width(16.dp)) // Space between icon and text
-
-        Column {
-            // Feature Title
-            Text(
-                text = title,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
-
-            // Feature Subtitle
-            Text(
-                text = subtitle,
-                fontSize = 14.sp,
-                color = Color.Gray
-            )
-        }
-    }
-}
 

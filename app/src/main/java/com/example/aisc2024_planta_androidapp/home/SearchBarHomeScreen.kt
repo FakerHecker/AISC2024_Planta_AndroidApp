@@ -79,8 +79,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.material3.*
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.vectorResource
 
 @Composable
 fun SearchBar(
@@ -108,14 +110,14 @@ fun SearchBar(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().padding(start = 8.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_search),
-                contentDescription = "Search Icon",
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.icon_search),
+                contentDescription = "Notification Icon",
                 modifier = Modifier
-                    .size(32.dp)
-                    .padding(start = 12.dp)
+                    .size(24.dp),
+                tint = colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.width(8.dp))

@@ -77,108 +77,6 @@ fun HomeMainScreen(
 }
 
 @Composable
-fun AppNavHost(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = AppRoute.HomeScreen.name
-    ) {
-        composable(AppRoute.HomeScreen.name) { HomeScreen() }
-        composable(AppRoute.Scan.name) { ScanScreen(
-            onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },
-            onDiagnoseClicked = { navController.navigate(AppRoute.ScanDiagnose.name) }
-        ) }
-        composable(AppRoute.Garden.name) { GardenScreen()  }
-    }
-}
-
-@Composable
-fun BottomNavigationBar(navController: NavHostController) {
-    val items = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.Scan,
-        BottomNavItem.Garden
-    )
-
-    NavigationBar(
-        containerColor = Color.White,
-        contentColor = Color.Black
-    ) {
-        val navBackStackEntry = navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry.value?.destination?.route
-
-        items.forEach { item ->
-            NavigationBarItem(
-                icon = {
-                    if (item == BottomNavItem.Scan) {
-                        // Special styling for the middle button
-                        Box(
-                            modifier = Modifier
-                                .size(56.dp)
-                                .background(Color(0xFF4CAF50), CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(id = item.icon),
-                                contentDescription = item.title,
-                                tint = Color.White
-                            )
-                        }
-                    } else {
-                        Icon(
-                            painter = painterResource(id = item.icon),
-                            contentDescription = item.title,
-                            tint = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
-                        )
-                    }
-                },
-                label = {
-                    if (item != BottomNavItem.Scan) {
-                        Text(
-                            text = item.title,
-                            color = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
-                        )
-                    }
-                },
-                selected = currentRoute == item.route,
-                onClick = {
-                    when (item) {
-                        BottomNavItem.Home -> navController.navigate(AppRoute.HomeScreen.name) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                        BottomNavItem.Scan -> navController.navigate(AppRoute.Scan.name) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                        BottomNavItem.Garden -> navController.navigate(AppRoute.Garden.name) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                },
-                alwaysShowLabel = item != BottomNavItem.Scan // Hide the label for the middle button
-            )
-        }
-    }
-}
-
-sealed class BottomNavItem(val title: String, val icon: Int, val route: String) {
-    object Home : BottomNavItem("Trang chủ", R.drawable.icon_time, "home")
-    object Scan : BottomNavItem("", R.drawable.icon_uv, "scan")
-    object Garden : BottomNavItem("Vườn cây", R.drawable.icon_plant_outlined, "garden")
-}
-
-
-@Composable
 fun HomeScreen() {
     val scrollState = rememberScrollState()
     Column(
@@ -187,9 +85,9 @@ fun HomeScreen() {
             .verticalScroll(scrollState)
             .padding(16.dp)
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         HeaderHomeScreen()
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         SearchBarHomeScreen()
         Text(
             text = "Thời tiết hôm nay",

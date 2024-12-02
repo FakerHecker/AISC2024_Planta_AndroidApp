@@ -11,31 +11,31 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Recommendations() {
     Column (
-        verticalArrangement = Arrangement.spacedBy(18.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Row  (
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ){
             // Example recommendations
-            RecommendationItem("Cây đuôi công", "45 ngày")
-            RecommendationItem("Cây đuôi công", "45 ngày")
+            RecommendationItem("Cây đuôi công", "Trong nhà", "Trang trí","45 ngày")
+            RecommendationItem("Cây đuôi công", "Trong nhà", "Trang trí","45 ngày")
         }
         Row  (
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ){
             // Example recommendations
-            RecommendationItem("Cây đuôi công", "45 ngày")
-            RecommendationItem("Cây đuôi công", "45 ngày")
+            RecommendationItem("Cây đuôi công","Trong nhà", "Trang trí", "45 ngày")
+            RecommendationItem("Cây đuôi công","Trong nhà", "Trang trí", "45 ngày")
         }
         Row  (
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ){
             // Example recommendations
-            RecommendationItem("Cây đuôi công", "45 ngày")
-            RecommendationItem("Cây đuôi công", "45 ngày")
+            RecommendationItem("Cây đuôi công", "Trong nhà", "Trang trí","45 ngày")
+            RecommendationItem("Cây đuôi công","Trong nhà", "Trang trí", "45 ngày")
         }
     }
 }
