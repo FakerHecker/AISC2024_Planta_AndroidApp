@@ -28,7 +28,6 @@ import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -57,40 +56,6 @@ import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Composable
-fun HomeMainScreen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
-) {
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(navController = navController)
-        }
-    ) {
-        Box(modifier = Modifier
-            .padding(bottom = 80.dp)
-            .background(colorScheme.surface)) {
-            HomeScreenNavHost(navController)
-        }
-    }
-}
-
-@Composable
-fun AppNavHost(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = AppRoute.HomeScreen.name
-    ) {
-        composable(AppRoute.HomeScreen.name) { HomeScreen() }
-        composable(AppRoute.Scan.name) { ScanScreen(
-            onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },
-            onDiagnoseClicked = { navController.navigate(AppRoute.ScanDiagnose.name) }
-        ) }
-        composable(AppRoute.Garden.name) { GardenScreen()  }
-    }
-}
-
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
@@ -113,21 +78,22 @@ fun BottomNavigationBar(navController: NavHostController) {
                         // Special styling for the middle button
                         Box(
                             modifier = Modifier
-                                .size(56.dp)
-                                .background(Color(0xFF4CAF50), CircleShape),
+                                .size(48.dp)
+                                .background(colorScheme.primary, CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(
+                            Image(
                                 painter = painterResource(id = item.icon),
                                 contentDescription = item.title,
-                                tint = Color.White
+                                modifier = Modifier.size(24.dp)
                             )
                         }
                     } else {
                         Icon(
                             painter = painterResource(id = item.icon),
                             contentDescription = item.title,
-                            tint = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
+                            modifier = Modifier.size(24.dp),
+                            tint = if (currentRoute == item.route) colorScheme.primary else colorScheme.onSurfaceVariant
                         )
                     }
                 },
@@ -135,7 +101,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                     if (item != BottomNavItem.Scan) {
                         Text(
                             text = item.title,
-                            color = if (currentRoute == item.route) Color(0xFF4CAF50) else Color.DarkGray
+                            color = if (currentRoute == item.route) colorScheme.primary else colorScheme.onSurfaceVariant
                         )
                     }
                 },
@@ -170,49 +136,3 @@ fun BottomNavigationBar(navController: NavHostController) {
         }
     }
 }
-
-sealed class BottomNavItem(val title: String, val icon: Int, val route: String) {
-    object Home : BottomNavItem("Trang chủ", R.drawable.icon_time, "home")
-    object Scan : BottomNavItem("", R.drawable.icon_uv, "scan")
-    object Garden : BottomNavItem("Vườn cây", R.drawable.icon_plant_outlined, "garden")
-}
-
-
-@Composable
-fun HomeScreen() {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp)
-    ) {
-        Spacer(modifier = Modifier.height(30.dp))
-        HeaderHomeScreen()
-        Spacer(modifier = Modifier.height(4.dp))
-        SearchBarHomeScreen()
-        Text(
-            text = "Thời tiết hôm nay",
-            style = MaterialTheme.typography.titleMedium,
-            color = colorScheme.onSurface,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
-        // Weather Info
-        WeatherInfo()
-        // Tasks for Today
-        Spacer(modifier = Modifier.padding(8.dp))
-        HeaderSection("Nhiệm vụ trong ngày")
-        Spacer(modifier = Modifier.padding(2.dp))
-        DailyTasksSection()
-        Spacer(modifier = Modifier.size(8.dp))
-        HeaderSection("Tin tức mới")
-        Spacer(modifier = Modifier.padding(2.dp))
-        NewsSection()
-        HeaderSection("Gợi ý cho bạn")
-        Recommendations()
-    }
-}
-
-
-
