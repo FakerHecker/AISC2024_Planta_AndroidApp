@@ -30,7 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.aisc2024_planta_androidapp.R
-import com.example.aisc2024_planta_androidapp.scan_result.info.InfoCard
+import com.example.aisc2024_planta_androidapp.scan_result.info.component.InfoCard
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 
 @Composable

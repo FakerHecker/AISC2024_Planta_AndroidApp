@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -57,13 +58,19 @@ import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDia
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
 @Composable
-fun HomeScreenNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun HomeScreenNavHost(
+    navController: NavHostController,
+    nestedScrollConnection: NestedScrollConnection,
+    modifier: Modifier = Modifier
+) {
     NavHost(
         navController = navController,
         startDestination = AppRoute.HomeScreen.name,
         modifier = modifier
     ) {
-        composable(AppRoute.HomeScreen.name) { HomeScreen() }
+        composable(AppRoute.HomeScreen.name) {
+            HomeScreen(nestedScrollConnection)
+        }
         composable(AppRoute.Garden.name) {  }
     }
 }

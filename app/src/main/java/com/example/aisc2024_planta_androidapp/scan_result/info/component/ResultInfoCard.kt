@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.scan_result.info
+package com.example.aisc2024_planta_androidapp.scan_result.info.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
