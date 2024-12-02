@@ -1,5 +1,6 @@
 package com.example.aisc2024_planta_androidapp.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -10,6 +11,8 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -18,6 +21,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.aisc2024_planta_androidapp.AppRoute
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
+import com.example.aisc2024_planta_androidapp.util.addGradient
 
 @Composable
 fun BottomNavigationBar(
@@ -31,10 +35,11 @@ fun BottomNavigationBar(
     )
 
     NavigationBar {
-        val navBackStackEntry = navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry.value?.destination?.route
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
 
         items.forEach { item ->
+            val selected = currentRoute == item.route
             NavigationBarItem(
                 icon = {
                     // Special styling for the middle button
@@ -53,23 +58,27 @@ fun BottomNavigationBar(
                         }
                         return@NavigationBarItem
                     }
+                    val iconModifier =
+                        if (!selected) Modifier
+                        else Modifier.addGradient(colorScheme.primaryGradient)
                     Icon(
-                        painter = painterResource(id = item.icon),
+                        // TODO: add filled and outlined variants for selected state
+                        painter = painterResource(item.icon),
                         contentDescription = item.title,
-                        modifier = Modifier.size(24.dp),
-                        tint = if (currentRoute == item.route) colorScheme.primary else colorScheme.onSurfaceVariant
+                        modifier = iconModifier.size(24.dp),
+                        tint = if (selected) colorScheme.primary else colorScheme.onSurfaceVariant
                     )
                 },
                 label = {
                     if (item != BottomNavItem.Scan) {
                         Text(
                             text = item.title,
-                            color = if (currentRoute == item.route) colorScheme.primary else colorScheme.onSurfaceVariant
+                            color = if (selected) colorScheme.primary else colorScheme.onSurfaceVariant
                         )
                     }
                 },
-                selected = currentRoute == item.route,
                 onClick = {
+                    if (selected) return@NavigationBarItem
                     when (item) {
                         BottomNavItem.Home -> navController.navigate(AppRoute.HomeScreen.name) {
                             popUpTo(navController.graph.startDestinationId) {
@@ -88,6 +97,7 @@ fun BottomNavigationBar(
                         }
                     }
                 },
+                selected = false,
                 alwaysShowLabel = item != BottomNavItem.Scan // Hide the label for the middle button
             )
         }
