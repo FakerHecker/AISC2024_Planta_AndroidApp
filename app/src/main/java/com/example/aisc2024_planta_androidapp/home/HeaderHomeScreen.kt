@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -72,8 +73,7 @@ fun HeaderHomeScreen(){
         // Text Header
         Text(
             text = "Chào Plantie 🍀",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold,
+            style = typography.titleLarge,
             color = colorScheme.onSurface,
             modifier = Modifier
                 .padding(top = 8.dp)

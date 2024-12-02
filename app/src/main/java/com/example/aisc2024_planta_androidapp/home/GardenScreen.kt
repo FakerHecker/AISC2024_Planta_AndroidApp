@@ -236,7 +236,7 @@ fun TaskCard(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "$timeAgo",
+                            text = timeAgo,
                             fontSize = 11.sp,
                             color = Color(0xFF005200),
                             fontWeight = FontWeight.Bold
@@ -246,9 +246,9 @@ fun TaskCard(
                     Row (
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(3.dp)
-                    ){
+                    ) {
                         Text(
-                            text = "$waterAmount",
+                            text = waterAmount,
                             fontSize = 11.sp,
                             color = Color(0xFF005200),
                             fontWeight = FontWeight.Bold
@@ -307,15 +307,7 @@ fun TaskSection(){
                             .clip(CircleShape)
                             .border(1.dp, Color(0xFFCAE0CD), CircleShape)
                             .background(Color.White)
-                            .clickable(
-                                onClick = {
-                                },
-                                indication = rememberRipple(
-                                    bounded = true,
-                                    color = Color(0xFF059710).copy(alpha = 0.5f)
-                                ),
-                                interactionSource = remember { MutableInteractionSource() }
-                            ),
+                            .clickable {},
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
@@ -349,15 +341,7 @@ fun TaskSection(){
                             .clip(CircleShape)
                             .border(1.dp, Color(0xFFCAE0CD), CircleShape)
                             .background(Color.White)
-                            .clickable(
-                                onClick = {
-                                },
-                                indication = rememberRipple(
-                                    bounded = true,
-                                    color = Color(0xFF059710).copy(alpha = 0.5f)
-                                ),
-                                interactionSource = remember { MutableInteractionSource() }
-                            ),
+                            .clickable {},
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
@@ -425,11 +409,7 @@ fun TaskSection(){
                         .height(32.dp)
                         .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
                         .border(1.dp, Color(0xFFCAE0CD), RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-                        .clickable(
-                            indication = rememberRipple(color = Color(0xFF4CAF50), bounded = true),
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                        },
+                        .clickable {},
                     contentAlignment = Alignment.Center
                 ) {
                     Text(

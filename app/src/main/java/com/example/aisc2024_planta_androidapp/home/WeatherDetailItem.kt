@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.HorizontalScrollView
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -58,34 +60,30 @@ import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDia
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
 @Composable
-fun WeatherDetailItem(iconRes: Int, label: String, value: String) {
-    Card(
-        modifier = Modifier
-            .size(width = 122.dp, height = 36.dp),
-        colors = CardDefaults.cardColors(Color.Transparent)
-    ) {
-        Row(
-
-        ) {
-            Image(
-                painter = painterResource(id = iconRes),
-                contentDescription = label,
-                modifier = Modifier.size(36.dp) // Adjust icon size
+fun WeatherDetailItem(
+    @DrawableRes iconRes: Int,
+    label: String,
+    value: String,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier) {
+        Image(
+            painter = painterResource(id = iconRes),
+            contentDescription = label,
+            modifier = Modifier.size(36.dp)
+        )
+        Spacer(Modifier.width(8.dp))
+        Column {
+            Text(text = label,
+                style = typography.labelSmall,
+                color = colorScheme.onSurfaceVariant,
+                fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.size(8.dp))
-            Column() {
-                Text(text = label,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(text = value,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            Text(text = value,
+                style = typography.labelLarge,
+                color = colorScheme.onSurfaceVariant,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
-
 }

@@ -2,12 +2,14 @@ package com.example.aisc2024_planta_androidapp.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
@@ -86,6 +88,14 @@ private val LightColorScheme = lightColorScheme(
     surfaceContainerHigh = surfaceContainerHighLight,
     surfaceContainerHighest = surfaceContainerHighestLight,
 )
+
+val ColorScheme.primaryGradient: Brush
+    get() = Brush.linearGradient(
+        colorStops = arrayOf(
+            0.0f to primary,
+            0.8f to Color(0xFF04CB01),
+        )
+    )
 
 @Composable
 fun AISC2024_Planta_AndroidAppTheme(

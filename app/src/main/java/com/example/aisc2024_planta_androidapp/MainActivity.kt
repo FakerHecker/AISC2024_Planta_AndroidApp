@@ -16,8 +16,6 @@ import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAp
 import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
-import com.example.aisc2024_planta_androidapp.account.AccountScreen
-import com.example.aisc2024_planta_androidapp.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +42,7 @@ fun AppMainScreen(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppRoute.Login.name,
+        startDestination = AppRoute.HomeScreen.name,
         modifier = modifier
     ) {
         composable(AppRoute.Login.name) {
@@ -55,7 +53,6 @@ fun AppMainScreen(
         composable(AppRoute.HomeScreen.name) {
             HomeMainScreen()
         }
-
         composable(AppRoute.Scan.name) {
             ScanScreen(
                 onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },
