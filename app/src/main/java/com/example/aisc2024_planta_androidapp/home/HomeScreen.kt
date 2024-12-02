@@ -1,8 +1,5 @@
 package com.example.aisc2024_planta_androidapp.home
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
@@ -21,28 +17,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.aisc2024_planta_androidapp.AppRoute
-import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeMainScreen(
-    modifier: Modifier = Modifier,
+    onScan: () -> Unit,
     navController: NavHostController = rememberNavController()
 ) {
     Scaffold(
+        topBar = {
+            HomeScreenTopBar(Modifier.padding(horizontal = 8.dp))
+        },
         bottomBar = {
-            BottomNavigationBar(navController = navController)
-        }
-    ) {
-        Box(modifier = Modifier
-            .padding(bottom = 80.dp)
-            .background(colorScheme.surface)) {
-            HomeScreenNavHost(navController)
-        }
+            BottomNavigationBar(
+                navController = navController,
+                onScan = onScan
+            )
+        },
+        containerColor = colorScheme.surface
+    ) { innerPadding ->
+        HomeScreenNavHost(
+            navController,
+            Modifier.padding(innerPadding)
+        )
     }
 }
 
@@ -55,9 +52,6 @@ fun HomeScreen() {
             .verticalScroll(scrollState)
             .padding(16.dp)
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
-        HeaderHomeScreen()
-        Spacer(modifier = Modifier.height(4.dp))
         SearchBarHomeScreen()
         Text(
             text = "Thời tiết hôm nay",
@@ -73,14 +67,14 @@ fun HomeScreen() {
         )
         // Tasks for Today
         Spacer(modifier = Modifier.padding(8.dp))
-        HeaderSection("Nhiệm vụ trong ngày")
+        HeaderSection("Nhiệm vụ trong ngày", {})
         Spacer(modifier = Modifier.padding(2.dp))
         DailyTasksSection()
         Spacer(modifier = Modifier.size(8.dp))
-        HeaderSection("Tin tức mới")
+        HeaderSection("Tin tức mới", {})
         Spacer(modifier = Modifier.padding(2.dp))
         NewsSection()
-        HeaderSection("Gợi ý cho bạn")
+        HeaderSection("Gợi ý cho bạn", {})
         Recommendations()
     }
 }

@@ -57,7 +57,10 @@ import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDia
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(
+    navController: NavHostController,
+    onScan: () -> Unit,
+) {
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.Scan,
@@ -115,13 +118,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                             launchSingleTop = true
                             restoreState = true
                         }
-                        BottomNavItem.Scan -> navController.navigate(AppRoute.Scan.name) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        BottomNavItem.Scan -> onScan()
                         BottomNavItem.Garden -> navController.navigate(AppRoute.Garden.name) {
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = true

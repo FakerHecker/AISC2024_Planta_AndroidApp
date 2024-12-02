@@ -59,12 +59,10 @@ import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScr
 
 @Composable
 fun DailyTasksSection() {
-
     Column(modifier = Modifier.fillMaxWidth()) {
-        Card(
+        OutlinedCard(
             modifier = Modifier
-                .fillMaxWidth()
-                .border(1.dp, colorScheme.outline, RoundedCornerShape(16.dp)),
+                .fillMaxWidth(),
             colors = CardDefaults.cardColors(
                 containerColor = colorScheme.outline,
             )
@@ -78,9 +76,8 @@ fun DailyTasksSection() {
                     .size(8.dp))
                 Text(
                     text = "Thứ 2",
-                    style = MaterialTheme.typography.labelMedium,
+                    style = typography.labelMedium,
                     color = colorScheme.onSurfaceVariant,
-                    fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
                 Text(

@@ -51,12 +51,15 @@ fun AppMainScreen(
             )
         }
         composable(AppRoute.HomeScreen.name) {
-            HomeMainScreen()
+            HomeMainScreen(onScan = {
+                navController.navigate(AppRoute.Scan.name)
+            })
         }
         composable(AppRoute.Scan.name) {
             ScanScreen(
                 onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },
-                onDiagnoseClicked = { navController.navigate(AppRoute.ScanDiagnose.name) }
+                onDiagnoseClicked = { navController.navigate(AppRoute.ScanDiagnose.name) },
+                onNavigateUp = { navController.navigateUp() }
             )
         }
         composable(AppRoute.ScanResult.name) {

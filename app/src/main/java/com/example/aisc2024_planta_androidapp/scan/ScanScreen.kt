@@ -91,7 +91,7 @@ import kotlinx.coroutines.delay
 @Composable
 private fun SSP() {
     AISC2024_Planta_AndroidAppTheme {
-        ScanScreen({}, {})
+        ScanScreen({}, {}, {})
     }
 }
 
@@ -100,6 +100,7 @@ private fun SSP() {
 fun ScanScreen(
     onScanClicked: () -> Unit,
     onDiagnoseClicked: () -> Unit,
+    onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     // make status bar icons white
@@ -153,7 +154,7 @@ fun ScanScreen(
         Scaffold(topBar = { TopAppBar(
             title = { Text("Quét thông minh") },
             navigationIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = onNavigateUp) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"

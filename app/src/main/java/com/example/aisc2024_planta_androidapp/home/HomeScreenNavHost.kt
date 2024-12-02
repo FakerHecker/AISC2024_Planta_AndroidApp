@@ -57,16 +57,13 @@ import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDia
 import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
 
 @Composable
-fun HomeScreenNavHost(navController: NavHostController) {
+fun HomeScreenNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
-        startDestination = AppRoute.HomeScreen.name
+        startDestination = AppRoute.HomeScreen.name,
+        modifier = modifier
     ) {
         composable(AppRoute.HomeScreen.name) { HomeScreen() }
-        composable(AppRoute.Scan.name) { ScanScreen(
-            onScanClicked = { navController.navigate(AppRoute.ScanResult.name) },
-            onDiagnoseClicked = { navController.navigate(AppRoute.ScanDiagnose.name) }
-        ) }
         composable(AppRoute.Garden.name) {  }
     }
 }
