@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.home
+package com.example.aisc2024_planta_androidapp.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

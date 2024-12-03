@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.home
+package com.example.aisc2024_planta_androidapp.main
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
