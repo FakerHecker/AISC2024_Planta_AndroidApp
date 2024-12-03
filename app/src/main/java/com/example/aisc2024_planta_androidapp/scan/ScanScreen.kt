@@ -250,7 +250,7 @@ fun ScanScreen(
                         modifier = Modifier.size(64.dp)
                             .align(Alignment.Center)
                     ) {
-                        Icon(painter = painterResource(R.drawable.snap),
+                        Icon(painter = painterResource(R.drawable.icon_snap_button),
                             contentDescription = "snap button",
                             tint = colorScheme.onPrimary,
                             modifier = Modifier.fillMaxSize()

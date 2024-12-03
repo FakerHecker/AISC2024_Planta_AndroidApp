@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,18 +34,12 @@ import com.example.aisc2024_planta_androidapp.R
 
 @Composable
 fun RecommendationItem(name: String, duration: String) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
+    OutlinedCard(
         modifier = Modifier
             .clickable(onClick = {})
             .width(180.dp)
             .height(275.dp)
             .clip(RoundedCornerShape(6.dp)),
-        border = BorderStroke(
-            1.66.dp, Color(0xFFCAE0CD)
-        )
     ) {
         Column(
             modifier = Modifier
@@ -103,7 +98,7 @@ fun RecommendationItem(name: String, duration: String) {
                         .padding(8.dp)  // Khoảng cách giữa icon và viền
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.potted_plant),
+                        painter = painterResource(R.drawable.icon_plant_outlined),
                         contentDescription = "Recommend Icon",
                         modifier = Modifier
                             .size(25.dp),

@@ -60,9 +60,9 @@ fun DailyTaskItem(
                 Text(text = location, style = typography.bodySmall)
                 Spacer(Modifier.weight(1f))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.icon_time),
-                        contentDescription = "Time Icon",
+                    Icon(
+                        painter = painterResource(R.drawable.icon_time),
+                        contentDescription = null,
                         modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))

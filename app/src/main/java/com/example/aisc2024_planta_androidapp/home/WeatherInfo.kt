@@ -1,13 +1,11 @@
 package com.example.aisc2024_planta_androidapp.home
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -23,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.aisc2024_planta_androidapp.R
 import com.example.aisc2024_planta_androidapp.ui.layout_util.FixedGrid
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
+import com.example.aisc2024_planta_androidapp.home.MetricType as MetricType
 
 @Composable
 fun WeatherInfo(
@@ -106,22 +105,22 @@ fun WeatherInfo(
             ) { index ->
                 when (index) {
                     0 -> WeatherDetailItem(
-                        iconRes = R.drawable.ic_uv,
+                        metricType = MetricType.UV_INDEX,
                         label = "Chỉ số UV",
                         value = "Trung bình"
                     )
                     1 -> WeatherDetailItem(
-                        iconRes = R.drawable.ic_wind,
+                        metricType = MetricType.WIND_SPEED,
                         label = "Tốc độ gió",
                         value = "16km/h"
                     )
                     2 -> WeatherDetailItem(
-                        iconRes = R.drawable.ic_humid,
+                        metricType = MetricType.HUMIDITY,
                         label = "Độ ẩm",
                         value = "58%"
                     )
                     3 -> WeatherDetailItem(
-                        iconRes = R.drawable.ic_rain,
+                        metricType = MetricType.PRECIPITATION,
                         label = "Khả năng mưa",
                         value = "14%"
                     )

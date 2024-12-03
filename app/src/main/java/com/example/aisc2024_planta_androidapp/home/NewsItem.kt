@@ -21,15 +21,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.aisc2024_planta_androidapp.R
 
 @Composable
-fun NewsItem(title: String) {
+fun NewsItem(
+    title: String,
+    category: String,
+    bannerImageModel: Any?,
+    postedDate: String,
+    timeToRead: String,
+    authorImageModel: Any?,
+    authorName: String,
+    modifier: Modifier = Modifier
+) {
     OutlinedCard(
         onClick = {},
-        modifier = Modifier.size(width = 220.dp, height = 248.dp)
+        modifier = modifier.size(width = 220.dp, height = 248.dp)
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -37,7 +44,7 @@ fun NewsItem(title: String) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             AsyncImage(
-                model = R.drawable.post_image,
+                model = bannerImageModel,
                 contentDescription = "Hình minh họa tin tức",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -47,29 +54,30 @@ fun NewsItem(title: String) {
             )
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    text = "Cách chăm sóc cây cảnh trong nhà",
-                    style = typography.labelLarge
+                    text = title,
+                    style = typography.labelLarge,
+                    maxLines = 2
                 )
                 Text(
-                    text = "Chăm sóc cây · Mẹo vặt",
+                    text = category,
                     style = typography.bodySmall
                 )
                 Text(
-                    text = "15/08/2024 · 3 phút đọc",
+                    text = "$postedDate · $timeToRead",
                     style = typography.bodySmall
                 )
             }
             Spacer(Modifier.weight(1f))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AsyncImage(
-                    model = R.drawable.author_image,
+                    model = authorImageModel,
                     contentDescription = "Avatar tác giả",
                     modifier = Modifier.size(20.dp),
                     contentScale = ContentScale.Crop
                 )
                 Spacer(Modifier.width(4.dp))
                 Text(
-                    text = "Planta",
+                    text = authorName,
                     style = typography.labelSmall
                 )
             }
