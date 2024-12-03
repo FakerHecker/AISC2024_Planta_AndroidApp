@@ -2,6 +2,7 @@ package com.example.aisc2024_planta_androidapp.main.home
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,10 +28,11 @@ fun HomeScreen(nestedScrollConnection: NestedScrollConnection) {
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(nestedScrollConnection)
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
     ) {
         item {
             SearchBarHomeScreen()
+            Spacer(Modifier.height(8.dp))
             Text(
                 text = "Thời tiết hôm nay",
                 style = typography.titleMedium,
@@ -38,22 +40,24 @@ fun HomeScreen(nestedScrollConnection: NestedScrollConnection) {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(vertical = 16.dp)
             )
-            // Weather Info
             WeatherInfo(
                 temperature = "34°",
                 isSunny = false
             )
             // Tasks for Today
-            Spacer(modifier = Modifier.padding(8.dp))
+            Spacer(Modifier.height(8.dp))
             SectionHeader("Nhiệm vụ trong ngày", {})
-            Spacer(modifier = Modifier.padding(2.dp))
+            Spacer(Modifier.height(2.dp))
             DailyTasksSection()
-            Spacer(modifier = Modifier.size(8.dp))
+
+            Spacer(Modifier.height(8.dp))
             SectionHeader("Tin tức mới", {})
-            Spacer(modifier = Modifier.padding(2.dp))
+            Spacer(Modifier.height(2.dp))
             NewsSection()
+
             SectionHeader("Gợi ý cho bạn", {})
             RecommendationSection()
+            Spacer(Modifier.height(32.dp))
         }
         // TODO: move recommendation items here
     }

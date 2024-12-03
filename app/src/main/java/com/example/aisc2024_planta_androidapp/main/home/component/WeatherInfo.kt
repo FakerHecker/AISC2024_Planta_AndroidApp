@@ -39,9 +39,10 @@ fun WeatherInfo(
             containerColor = colorScheme.surfaceContainerHigh
         ),
     ) { Box {
+        // decorative background blur
         Box(Modifier.blur(200.dp).matchParentSize()) {
             Box(Modifier
-                .background(bgColor, shape = CircleShape)
+                .background(bgColor, CircleShape)
                 .size(80.dp)
                 .align(Alignment.TopEnd)
             )
@@ -55,7 +56,7 @@ fun WeatherInfo(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-                    Row {
+                    Row(Modifier.clickable {}) {
                         Icon(
                             imageVector = Icons.Rounded.LocationOn,
                             contentDescription = "Location",
@@ -66,8 +67,7 @@ fun WeatherInfo(
                             text = "Thành phố Hồ Chí Minh",
                             style = typography.labelSmall,
                             color = colorScheme.onSurfaceVariant,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.clickable {}
+                            fontWeight = FontWeight.Bold
                         )
                     }
                     Spacer(modifier = Modifier.size(8.dp))
@@ -89,7 +89,7 @@ fun WeatherInfo(
                 Image(
                     modifier = Modifier.size(120.dp),
                     painter = painterResource(bgImageRes),
-                    contentDescription = "Weather Icon",
+                    contentDescription = "Weather banner",
                 )
             }
             Spacer(modifier = Modifier.size(8.dp))
