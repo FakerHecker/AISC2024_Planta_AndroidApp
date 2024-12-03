@@ -5,6 +5,7 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -25,6 +26,28 @@ val bricolageGrotesqueDisplay = FontFamily(Font(
         FontVariation.weight(800)
     )
 ))
+
+val beVietnamProFamily = FontFamily(
+    Font(R.font.be_vietnam_pro_regular),
+    Font(R.font.be_vietnam_pro_black, FontWeight.Black),
+    Font(R.font.be_vietnam_pro_extra_bold, FontWeight.ExtraBold),
+    Font(R.font.be_vietnam_pro_bold, FontWeight.Bold),
+    Font(R.font.be_vietnam_pro_semi_bold, FontWeight.SemiBold),
+    Font(R.font.be_vietnam_pro_medium, FontWeight.Medium),
+    Font(R.font.be_vietnam_pro_light, FontWeight.Light),
+    Font(R.font.be_vietnam_pro_extra_light, FontWeight.ExtraLight),
+    Font(R.font.be_vietnam_pro_thin, FontWeight.Thin),
+
+    Font(R.font.be_vietnam_pro_italic, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.be_vietnam_pro_black_italic, FontWeight.Black, FontStyle.Italic),
+    Font(R.font.be_vietnam_pro_extra_bold_italic, FontWeight.ExtraBold, FontStyle.Italic),
+    Font(R.font.be_vietnam_pro_bold_italic, FontWeight.Bold, FontStyle.Italic),
+    Font(R.font.be_vietnam_pro_semi_bold_italic, FontWeight.SemiBold, FontStyle.Italic),
+    Font(R.font.be_vietnam_pro_medium_italic, FontWeight.Medium, FontStyle.Italic),
+    Font(R.font.be_vietnam_pro_light_italic, FontWeight.Light, FontStyle.Italic),
+    Font(R.font.be_vietnam_pro_extra_light_italic, FontWeight.ExtraLight, FontStyle.Italic),
+    Font(R.font.be_vietnam_pro_thin_italic, FontWeight.Thin, FontStyle.Italic),
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -66,60 +89,61 @@ val Typography = Typography(
         fontWeight = FontWeight.W700,
     ),
 
-    titleLarge =  TextStyle(
+    titleLarge = TextStyle(
         fontFamily = bricolageGrotesqueBold,
         fontSize = 22.sp,
         lineHeight = 28.sp,
         fontWeight = FontWeight.W700,
     ),
-    titleMedium =  TextStyle(
+    titleMedium = TextStyle(
         fontFamily = bricolageGrotesqueBold,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         fontWeight = FontWeight.W700,
     ),
-    titleSmall =  TextStyle(
+    titleSmall = TextStyle(
         fontFamily = bricolageGrotesqueBold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.W700,
     ),
 
-    labelLarge =  TextStyle(
+    labelLarge = TextStyle(
         fontFamily = bricolageGrotesqueBold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.W700,
     ),
-    labelMedium =  TextStyle(
+    labelMedium = TextStyle(
         fontFamily = bricolageGrotesqueBold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         fontWeight = FontWeight.W700,
     ),
-    labelSmall =  TextStyle(
+    labelSmall = TextStyle(
         fontFamily = bricolageGrotesqueBold,
         fontSize = 11.sp,
         lineHeight = 16.sp,
         fontWeight = FontWeight.W700,
     ),
 
-
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
+    bodyLarge = TextStyle(
+        fontFamily = beVietnamProFamily,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        fontWeight = FontWeight.W400,
     ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
+    bodyMedium = TextStyle(
+        fontFamily = beVietnamProFamily,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        fontWeight = FontWeight.W400,
+    ),
+    bodySmall = TextStyle(
+        fontFamily = beVietnamProFamily,
         fontSize = 11.sp,
         lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+        fontWeight = FontWeight.W400,
     )
-    */
 )
 
