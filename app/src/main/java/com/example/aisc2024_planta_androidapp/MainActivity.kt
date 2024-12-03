@@ -10,8 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.aisc2024_planta_androidapp.main.HomeMainScreen
 import com.example.aisc2024_planta_androidapp.login.LoginScreen
+import com.example.aisc2024_planta_androidapp.main.MainScreen
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 import com.example.aisc2024_planta_androidapp.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
@@ -51,7 +51,7 @@ fun AppMainScreen(
             )
         }
         composable(AppRoute.HomeScreen.name) {
-            HomeMainScreen(onScan = {
+            MainScreen(onScan = {
                 navController.navigate(AppRoute.Scan.name)
             })
         }

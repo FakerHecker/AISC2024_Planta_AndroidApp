@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.main
+package com.example.aisc2024_planta_androidapp.main.home.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.example.aisc2024_planta_androidapp.R
 import com.example.aisc2024_planta_androidapp.ui.layout_util.FixedGrid
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
-import com.example.aisc2024_planta_androidapp.main.MetricType as MetricType
 
 @Composable
 fun WeatherInfo(

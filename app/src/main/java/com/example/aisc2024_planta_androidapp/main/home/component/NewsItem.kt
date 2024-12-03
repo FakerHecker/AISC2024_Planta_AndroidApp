@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.main
+package com.example.aisc2024_planta_androidapp.main.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

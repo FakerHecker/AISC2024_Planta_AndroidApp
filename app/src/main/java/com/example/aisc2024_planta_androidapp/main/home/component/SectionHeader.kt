@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.main
+package com.example.aisc2024_planta_androidapp.main.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun HeaderSection(
+fun SectionHeader(
     stringHeader: String,
     onShowAll: () -> Unit,
 ) {

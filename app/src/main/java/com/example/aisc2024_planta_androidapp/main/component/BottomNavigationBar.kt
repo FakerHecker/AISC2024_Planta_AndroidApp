@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.main
+package com.example.aisc2024_planta_androidapp.main.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.aisc2024_planta_androidapp.AppRoute
+import com.example.aisc2024_planta_androidapp.main.BottomNavItem
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
 import com.example.aisc2024_planta_androidapp.util.addGradient
 

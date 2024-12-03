@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.main
+package com.example.aisc2024_planta_androidapp.main.home.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -43,10 +43,10 @@ fun DailyTaskItem(
                 contentDescription = "Plant Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(62.dp)
                     .clip(RoundedCornerShape(4.dp))
+                    .size(62.dp)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(Modifier.width(8.dp))
             Column(Modifier.fillMaxHeight()) {
                 Text(text = name, style = typography.labelLarge)
                 Text(text = location, style = typography.bodySmall)
@@ -57,7 +57,7 @@ fun DailyTaskItem(
                         contentDescription = null,
                         modifier = Modifier.size(14.dp)
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Spacer(Modifier.width(4.dp))
                     Text(text = time, style = typography.labelSmall)
                 }
             }

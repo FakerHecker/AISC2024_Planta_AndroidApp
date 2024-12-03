@@ -7,9 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.aisc2024_planta_androidapp.AppRoute
+import com.example.aisc2024_planta_androidapp.main.home.HomeScreen
 
 @Composable
-fun HomeScreenNavHost(
+fun MainScreenNavHost(
     navController: NavHostController,
     nestedScrollConnection: NestedScrollConnection,
     modifier: Modifier = Modifier
@@ -22,6 +23,8 @@ fun HomeScreenNavHost(
         composable(AppRoute.HomeScreen.name) {
             HomeScreen(nestedScrollConnection)
         }
-        composable(AppRoute.Garden.name) {  }
+        composable(AppRoute.Garden.name) {
+            GardenScreen()
+        }
     }
 }

@@ -1,51 +1,25 @@
-package com.example.aisc2024_planta_androidapp.main
+package com.example.aisc2024_planta_androidapp.main.home
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HomeMainScreen(
-    onScan: () -> Unit,
-    navController: NavHostController = rememberNavController()
-) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    Scaffold(
-        topBar = {
-            HomeScreenTopBar(scrollBehavior)
-        },
-        bottomBar = {
-            BottomNavigationBar(
-                navController = navController,
-                onScan = onScan
-            )
-        },
-        containerColor = colorScheme.surface
-    ) { innerPadding ->
-        HomeScreenNavHost(
-            navController,
-            scrollBehavior.nestedScrollConnection,
-            Modifier.padding(innerPadding)
-        )
-    }
-}
+import com.example.aisc2024_planta_androidapp.main.home.component.DailyTasksSection
+import com.example.aisc2024_planta_androidapp.main.home.component.SectionHeader
+import com.example.aisc2024_planta_androidapp.main.home.component.NewsSection
+import com.example.aisc2024_planta_androidapp.main.home.component.RecommendationSection
+import com.example.aisc2024_planta_androidapp.main.home.component.SearchBarHomeScreen
+import com.example.aisc2024_planta_androidapp.main.home.component.WeatherInfo
 
 @Composable
 fun HomeScreen(nestedScrollConnection: NestedScrollConnection) {
@@ -71,15 +45,16 @@ fun HomeScreen(nestedScrollConnection: NestedScrollConnection) {
             )
             // Tasks for Today
             Spacer(modifier = Modifier.padding(8.dp))
-            HeaderSection("Nhiệm vụ trong ngày", {})
+            SectionHeader("Nhiệm vụ trong ngày", {})
             Spacer(modifier = Modifier.padding(2.dp))
             DailyTasksSection()
             Spacer(modifier = Modifier.size(8.dp))
-            HeaderSection("Tin tức mới", {})
+            SectionHeader("Tin tức mới", {})
             Spacer(modifier = Modifier.padding(2.dp))
             NewsSection()
-            HeaderSection("Gợi ý cho bạn", {})
-            Recommendations()
+            SectionHeader("Gợi ý cho bạn", {})
+            RecommendationSection()
         }
+        // TODO: move recommendation items here
     }
 }

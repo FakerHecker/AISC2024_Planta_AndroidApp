@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.main
+package com.example.aisc2024_planta_androidapp.main.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -19,14 +19,13 @@ import com.example.aisc2024_planta_androidapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenTopBar(
+fun MainScreenTopBar(
+    title: String,
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = {
-            Text("Chào Plantie 🍀")
-        },
+        title = { Text(title) },
         scrollBehavior = scrollBehavior,
         modifier = modifier,
         navigationIcon = { Row {

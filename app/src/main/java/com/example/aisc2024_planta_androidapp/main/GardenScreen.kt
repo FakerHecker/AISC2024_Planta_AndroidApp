@@ -67,14 +67,9 @@ fun GardenScreen() {
             .verticalScroll(scrollState)
             .padding(16.dp)
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
         PremiumUpgradeCard()
-
         TaskSection()
-
         MyGardenSection()
-
-
     }
 }
 
