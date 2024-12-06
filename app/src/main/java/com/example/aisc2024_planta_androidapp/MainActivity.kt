@@ -10,12 +10,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.aisc2024_planta_androidapp.login.LoginScreen
-import com.example.aisc2024_planta_androidapp.main.MainScreen
+import com.example.aisc2024_planta_androidapp.screen.login.LoginScreen
+import com.example.aisc2024_planta_androidapp.screen.main.MainScreen
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
-import com.example.aisc2024_planta_androidapp.scan.ScanScreen
-import com.example.aisc2024_planta_androidapp.scan_result.diagnose.ScanResultDiagnoseScreen
-import com.example.aisc2024_planta_androidapp.scan_result.info.ScanResultInfoScreen
+import com.example.aisc2024_planta_androidapp.screen.scan.ScanScreen
+import com.example.aisc2024_planta_androidapp.screen.scan_result.diagnose.ScanResultDiagnoseScreen
+import com.example.aisc2024_planta_androidapp.screen.scan_result.info.ScanResultInfoScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
