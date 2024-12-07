@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.aisc2024_planta_androidapp.screen.login.LoginScreen
+import com.example.aisc2024_planta_androidapp.screen.auth.login.LoginScreen
 import com.example.aisc2024_planta_androidapp.screen.main.MainScreen
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 import com.example.aisc2024_planta_androidapp.screen.scan.ScanScreen
@@ -42,12 +42,12 @@ fun AppMainScreen(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppRoute.HomeScreen.name,
+        startDestination = AppRoute.Login.name,
         modifier = modifier
     ) {
         composable(AppRoute.Login.name) {
             LoginScreen(
-                loginClicked = {navController.navigate(AppRoute.HomeScreen.name)},
+                onLogin = {navController.navigate(AppRoute.HomeScreen.name)},
             )
         }
         composable(AppRoute.HomeScreen.name) {

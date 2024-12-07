@@ -106,7 +106,7 @@ fun PremiumUpgradeCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "Hi $userName,",
-                    style = MaterialTheme.typography.bodyLarge.copy(
+                    style = typography.bodyLarge.copy(
                         fontWeight = FontWeight.Bold
                     ),
                     color = Color(0xFF005200)
@@ -114,7 +114,7 @@ fun PremiumUpgradeCard(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Bạn đang được thêm tối đa 10 cây vào vườn. Nâng cấp Premium ngay để thêm cây vào vườn không giới hạn nhé!",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = typography.bodyMedium,
                     color = Color(0xFF005200)
                 )
                 Row(
@@ -142,13 +142,13 @@ fun TaskCard(
     waterAmount: String,
     waterIconRes: Int,
     plantImageRes: Int,
-    onCardClick: () -> Unit
+    onClick: () -> Unit
 ) {
     Card(
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp, horizontal = 8.dp)
-            .clickable { onCardClick },
+            .padding(vertical = 6.dp, horizontal = 8.dp),
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, Color(0xFFCAE0CD)),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFFCFFF8))
@@ -348,45 +348,18 @@ fun TaskSection(){
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            Column (
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TaskCard(
-                    plantName = "Cây đuôi công",
-                    plantStatus = "Trong nhà",
-                    timeAgo = "5 phút trước",
-                    waterAmount = "Tưới 500ml nước",
-                    waterIconRes = R.drawable.icon_time,
-                    plantImageRes = R.drawable.plant_image,
-                    onCardClick = {}
-                )
-                TaskCard(
-                    plantName = "Cây đuôi công",
-                    plantStatus = "Trong nhà",
-                    timeAgo = "5 phút trước",
-                    waterAmount = "Tưới 500ml nước",
-                    waterIconRes = R.drawable.icon_time,
-                    plantImageRes = R.drawable.plant_image,
-                    onCardClick = {}
-                )
-                TaskCard(
-                    plantName = "Cây đuôi công",
-                    plantStatus = "Trong nhà",
-                    timeAgo = "5 phút trước",
-                    waterAmount = "Tưới 500ml nước",
-                    waterIconRes = R.drawable.icon_time,
-                    plantImageRes = R.drawable.plant_image,
-                    onCardClick = {}
-                )
-                TaskCard(
-                    plantName = "Cây đuôi công",
-                    plantStatus = "Trong nhà",
-                    timeAgo = "5 phút trước",
-                    waterAmount = "Tưới 500ml nước",
-                    waterIconRes = R.drawable.icon_time,
-                    plantImageRes = R.drawable.plant_image,
-                    onCardClick = {}
-                )
+            Column (Modifier.fillMaxWidth()) {
+                for (i in (0..3)) {
+                    TaskCard(
+                        plantName = "Cây đuôi công",
+                        plantStatus = "Trong nhà",
+                        timeAgo = "5 phút trước",
+                        waterAmount = "Tưới 500ml nước",
+                        waterIconRes = R.drawable.icon_time,
+                        plantImageRes = R.drawable.plant_image,
+                        onClick = {}
+                    )
+                }
             }
 
             Box(
