@@ -6,6 +6,10 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -19,10 +23,11 @@ fun MainScreen(
     navController: NavHostController = rememberNavController()
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    var titleBarText by rememberSaveable { mutableStateOf("Chào Plantie 🍀") }
     Scaffold(
         topBar = {
             MainScreenTopBar(
-                title = "Chào Plantie 🍀",
+                title = titleBarText,
                 scrollBehavior = scrollBehavior,
             )
         },
@@ -37,7 +42,8 @@ fun MainScreen(
         MainScreenNavHost(
             navController,
             scrollBehavior.nestedScrollConnection,
-            Modifier.padding(innerPadding)
+            onTitleChange = { titleBarText = it },
+            modifier = Modifier.padding(innerPadding)
         )
     }
 }
