@@ -1,6 +1,5 @@
 package com.example.aisc2024_planta_androidapp.screen.auth.login
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,8 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
@@ -41,19 +38,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.sp
 import com.example.aisc2024_planta_androidapp.R
 import com.example.aisc2024_planta_androidapp.component.AppLogo
 import com.example.aisc2024_planta_androidapp.component.GradientButton
+import com.example.aisc2024_planta_androidapp.component.effect.StatusBarColorEffect
 import com.example.aisc2024_planta_androidapp.screen.auth.component.SignInWithGoogleButton
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
-import com.example.aisc2024_planta_androidapp.ui.theme.primaryLight
 
 @PreviewLightDark
 @Composable
@@ -67,6 +61,7 @@ private fun LoginPreview() {
 fun LoginScreen(
     onLogin: () -> Unit
 ) {
+    StatusBarColorEffect(toDark = true)
     Surface { Box(modifier = Modifier.fillMaxSize()) {
         // Background Image
         Image(
@@ -108,8 +103,10 @@ fun LoginScreen(
             val supportingText =
                 if (invalidCreds) "Thông tin đăng nhập sai hoặc không tồn tại"
                 else ""
+            // User name
             TextField(
                 value = username,
+                singleLine = true,
                 supportingText = { Text(supportingText) },
                 isError = invalidCreds,
                 onValueChange = { username = it; invalidCreds = false },
@@ -120,25 +117,11 @@ fun LoginScreen(
             )
 
             // TODO: refactor to component
-            var showPassword by remember { mutableStateOf(false) }
             var password by remember { mutableStateOf("") }
-            TextField(
-                value = password,
-                isError = invalidCreds,
-                onValueChange = { password = it },
-                label = { Text("Mật khẩu") },
-                trailingIcon = {
-                    IconButton(onClick = {showPassword = !showPassword}) {
-                        val icon =
-                            if (showPassword) Icons.Outlined.VisibilityOff
-                            else Icons.Outlined.Visibility
-                        Icon(icon, "Show/hide password")
-                    }
-                },
-                visualTransformation =
-                    if (showPassword) VisualTransformation.None
-                    else PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth()
+            PasswordField(
+                password = password,
+                onPasswordChange = {password = it},
+                isError = invalidCreds
             )
 
             Row(
@@ -196,4 +179,32 @@ fun LoginScreen(
             }
         }
     } }
+}
+
+@Composable
+private fun PasswordField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    isError: Boolean
+) {
+    var showPassword by remember { mutableStateOf(false) }
+    TextField(
+        value = password,
+        isError = isError,
+        singleLine = true,
+        onValueChange = onPasswordChange,
+        label = { Text("Mật khẩu") },
+        trailingIcon = {
+            IconButton(onClick = { showPassword = !showPassword }) {
+                val icon =
+                    if (showPassword) Icons.Outlined.VisibilityOff
+                    else Icons.Outlined.Visibility
+                Icon(icon, "Show/hide password")
+            }
+        },
+        visualTransformation =
+            if (showPassword) VisualTransformation.None
+            else PasswordVisualTransformation(),
+        modifier = Modifier.fillMaxWidth()
+    )
 }

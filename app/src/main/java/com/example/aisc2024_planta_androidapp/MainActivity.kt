@@ -16,7 +16,9 @@ import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAp
 import com.example.aisc2024_planta_androidapp.screen.scan.ScanScreen
 import com.example.aisc2024_planta_androidapp.screen.scan_result.diagnose.ScanResultDiagnoseScreen
 import com.example.aisc2024_planta_androidapp.screen.scan_result.info.ScanResultInfoScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,6 +1,5 @@
 package com.example.aisc2024_planta_androidapp.screen.scan
 
-import android.app.Activity
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -49,7 +48,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -69,16 +67,15 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.component.effect.StatusBarColorEffect
 import com.example.aisc2024_planta_androidapp.ui.composable.LoadingPopup
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -103,15 +100,8 @@ fun ScanScreen(
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // make status bar icons white
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
-            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = false
-        }
-    }
+    // make status bar icons white while in this screen
+    StatusBarColorEffect(toDark = true)
 
     var selectedMode by remember { mutableIntStateOf(0) }
     var showLoading by remember { mutableStateOf(false) }
