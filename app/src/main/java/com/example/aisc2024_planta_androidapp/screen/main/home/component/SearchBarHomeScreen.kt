@@ -26,6 +26,7 @@ import androidx.compose.ui.focus.onFocusChanged
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -49,38 +50,34 @@ fun SearchBar(
         }
     }
 
-    Card(
-        modifier = Modifier
+    OutlinedCard(
+        colors = cardColors(
+            containerColor = colorScheme.surfaceContainerHigh
+        ),
+        modifier = modifier
             .fillMaxWidth()
-            .height(40.dp),
-        border = BorderStroke(1.dp, colorScheme.outline),
-        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceContainerHigh),
+            .height(40.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 4.dp, horizontal = 12.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_search),
-                contentDescription = "Search Icon",
-                modifier = Modifier
-                    .size(32.dp)
-                    .padding(start = 12.dp)
-            )
+            Icon(painterResource(R.drawable.icon_search), null,)
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(Modifier.width(10.dp))
 
             Box(
                 modifier = Modifier
                     .weight(1f)
                     .height(32.dp)
-                    .padding(start = 6.dp)
             ) {
                 // Show placeholder if query is empty and field is not focused
                 if (query.text.isEmpty() && !isFocused) {
                     Text(
                         text = "Tìm kiếm cây trồng, triệu chứng bệnh...",  // Placeholder text
-                        style = MaterialTheme.typography.bodySmall,
+                        style = typography.bodySmall,
                         color = colorScheme.onSurface,
                         modifier = Modifier.align(Alignment.CenterStart)
                     )

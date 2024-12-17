@@ -22,6 +22,7 @@ import com.example.aisc2024_planta_androidapp.R
 fun MainScreenTopBar(
     title: String,
     scrollBehavior: TopAppBarScrollBehavior,
+    onNavigateToProfile: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
@@ -30,7 +31,7 @@ fun MainScreenTopBar(
         modifier = modifier,
         navigationIcon = { Row {
             Spacer(Modifier.padding(4.dp))
-            IconButton(onClick = {}) {
+            IconButton(onClick = onNavigateToProfile) {
                 Image(
                     painterResource(R.drawable.container_profile),
                     contentDescription = "User profile",

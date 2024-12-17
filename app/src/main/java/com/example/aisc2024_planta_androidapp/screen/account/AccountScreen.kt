@@ -22,9 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.aisc2024_planta_androidapp.R
+import com.example.aisc2024_planta_androidapp.component.effect.StatusBarColorEffect
 
 @Composable
 fun AccountScreen() {
+    StatusBarColorEffect(toDark = false)
     Surface {
         Column(
             modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())

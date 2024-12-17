@@ -20,6 +20,7 @@ import com.example.aisc2024_planta_androidapp.screen.main.component.MainScreenTo
 @Composable
 fun MainScreen(
     onScan: () -> Unit,
+    onNavigateToProfile: () -> Unit,
     navController: NavHostController = rememberNavController()
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -29,6 +30,7 @@ fun MainScreen(
             MainScreenTopBar(
                 title = titleBarText,
                 scrollBehavior = scrollBehavior,
+                onNavigateToProfile = onNavigateToProfile
             )
         },
         bottomBar = {
