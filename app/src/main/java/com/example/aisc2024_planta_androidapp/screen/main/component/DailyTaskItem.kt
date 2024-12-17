@@ -37,9 +37,14 @@ fun DailyTaskItem(
         colors = CardDefaults.outlinedCardColors().copy(
             containerColor = colorScheme.surfaceContainerHigh
         ),
-        modifier = Modifier.fillMaxWidth().height(78.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(78.dp)
     ) {
-        Row(Modifier.fillMaxSize().padding(8.dp)) {
+        Row(
+            Modifier
+                .fillMaxSize()
+                .padding(8.dp)) {
             AsyncImage(
                 model = imageModel,
                 contentDescription = "Plant Image",
@@ -66,7 +71,8 @@ fun DailyTaskItem(
             Spacer(Modifier.weight(1f))
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.End
+                horizontalAlignment = Alignment.End,
+                modifier = Modifier.fillMaxHeight()
             ) {
                 val buttonIsEnabled = true
                 OutlinedIconButton(
@@ -76,7 +82,9 @@ fun DailyTaskItem(
                     ),
                     border = BorderStroke(1.dp, colorScheme.outline),
                     enabled = buttonIsEnabled,
-                    modifier = Modifier.alpha(if (buttonIsEnabled) 1.0f else 0.5f)
+                    modifier = Modifier
+                        .alpha(if (buttonIsEnabled) 1.0f else 0.5f)
+                        .size(36.dp)
                 ) {
                     Icon(
                         painter = painterResource(taskIcon),
@@ -87,17 +95,22 @@ fun DailyTaskItem(
                             .size(20.dp),
                     )
                 }
-                Row {
-                    Text(text = task,
-                        style = typography.labelSmall,
-                        modifier = Modifier.alignByBaseline()
-                    )
-                    Spacer(modifier = Modifier.size(4.dp))
-                    Text(text = "+$points",
-                        color = colorScheme.primary,
-                        style = typography.labelLarge,
-                        modifier = Modifier.alignByBaseline()
-                    )
+                Row(verticalAlignment = Alignment.Bottom) {
+                    Row {
+                        Text(
+                            text = task,
+                            style = typography.labelSmall,
+                            modifier = Modifier.alignByBaseline()
+                        )
+                        Spacer(modifier = Modifier.size(4.dp))
+                        Text(
+                            text = "+$points",
+                            color = colorScheme.primary,
+                            style = typography.labelLarge,
+                            modifier = Modifier.alignByBaseline()
+                        )
+                        Spacer(modifier = Modifier.size(2.dp))
+                    }
                     Image(
                         painter = painterResource(id = R.drawable.ic_point),
                         contentDescription = "Task Icon",
