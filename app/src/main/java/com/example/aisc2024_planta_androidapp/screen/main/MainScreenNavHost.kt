@@ -1,11 +1,9 @@
 package com.example.aisc2024_planta_androidapp.screen.main
 
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -14,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.aisc2024_planta_androidapp.AppRoute
+import com.example.aisc2024_planta_androidapp.screen.main.garden.GardenScreen
 import com.example.aisc2024_planta_androidapp.screen.main.home.HomeScreen
 
 @Composable

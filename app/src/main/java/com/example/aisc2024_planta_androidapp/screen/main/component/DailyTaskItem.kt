@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.screen.main.home.component
+package com.example.aisc2024_planta_androidapp.screen.main.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -28,10 +28,12 @@ fun DailyTaskItem(
     task: String,
     time: String,
     taskIcon: Int,
-    points: Int
+    points: Int,
+    onClick: () -> Unit,
 ) {
     OutlinedCard(
         shape = RoundedCornerShape(8.dp),
+        onClick = onClick,
         colors = CardDefaults.outlinedCardColors().copy(
             containerColor = colorScheme.surfaceContainerHigh
         ),
@@ -68,7 +70,7 @@ fun DailyTaskItem(
             ) {
                 val buttonIsEnabled = true
                 OutlinedIconButton(
-                    onClick = {},
+                    onClick = {}, // TODO
                     colors = IconButtonDefaults.iconButtonColors().copy(
                         containerColor = colorScheme.surfaceContainerHighest
                     ),
