@@ -276,12 +276,21 @@ fun MyGardenSection() {
             )
             DropdownBox()
         }
-
-        FixedGrid(columns = 2, itemCount = 8,
+        FixedGrid(
+            columns = 2,
+            itemCount = 9, // Increased to 9
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            MyPlantCard("10", "/45 ngày", Modifier.fillMaxWidth())
+            modifier = Modifier
+        ) { index ->
+            if (index == 0)
+            {
+                // New MyPlantCard at the beginning
+                MyPlantCard("0", "/45 ngày", Modifier.fillMaxWidth())
+            } else
+            {
+                MyPlantCard("10", "/45 ngày", Modifier.fillMaxWidth())
+            }
         }
     }
 }

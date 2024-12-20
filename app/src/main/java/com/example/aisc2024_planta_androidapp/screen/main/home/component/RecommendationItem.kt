@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +28,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,7 +52,6 @@ import com.example.aisc2024_planta_androidapp.R
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun RecommendationItem(
     name: String,
@@ -60,14 +61,8 @@ fun RecommendationItem(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    var showToast by remember { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = showToast) {
-        if (showToast) {
-            delay(2000)
-            showToast = false
-        }
-    }
+    var showDialog by remember { mutableStateOf(false) }
+    var showSuccessDialog by remember { mutableStateOf(false) } // State for success dialog
 
     OutlinedCard(
         onClick = {},
@@ -118,7 +113,7 @@ fun RecommendationItem(
                 )
                 OutlinedIconButton(
                     onClick = {
-                        Toast.makeText(context, "Đã thêm cây vào vườn!", Toast.LENGTH_SHORT).show()
+                        showDialog = true
                     },
                     border = BorderStroke(1.dp, colorScheme.outline)
                 ) {
@@ -128,9 +123,63 @@ fun RecommendationItem(
                         tint = colorScheme.primary
                     )
                 }
-
             }
         }
+    }
 
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            icon = {
+                Icon(painterResource(R.drawable.logo), contentDescription = null)
+            },
+            title = {
+                Text(text = "Thêm cây")
+            },
+            text = {
+                Text(text = "Bạn có muốn thêm cây này vào vườn?")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDialog = false
+                        showSuccessDialog = true // Show success dialog
+                    }
+                ) {
+                    Text("Thêm")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showDialog = false
+                    }
+                ) {
+                    Text("Hủy")
+                }
+            }
+        )
+    }
+
+    // Success Dialog
+    if (showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = { showSuccessDialog = false },
+            title = {
+                Text(text = "Thành công")
+            },
+            text = {
+                Text(text = "Bạn đã thêm cây vào vườn thành công!")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showSuccessDialog = false
+                    }
+                ) {
+                    Text("OK")
+                }
+            }
+        )
     }
 }

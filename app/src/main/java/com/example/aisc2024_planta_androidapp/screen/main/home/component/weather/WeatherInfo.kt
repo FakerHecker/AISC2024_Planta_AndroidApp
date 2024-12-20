@@ -171,10 +171,11 @@ fun WeatherInfo(
                         }
 
                         3 -> if (weatherResponse != null) {
+                            val dailyChanceOfRain = weatherViewModel.getDailyChanceOfRain()
                             WeatherDetailItem(
                                 metricType = MetricType.PRECIPITATION,
                                 label = "Khả năng mưa",
-                                value = "${weatherResponse.current.precip_mm} mm"
+                                value = "$dailyChanceOfRain%"
                             )
                         }
                     }

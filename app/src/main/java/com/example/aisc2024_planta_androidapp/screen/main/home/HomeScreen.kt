@@ -39,9 +39,9 @@ fun HomeScreen(nestedScrollConnection: NestedScrollConnection) {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(vertical = 16.dp)
             )
-            WeatherInfo(
 
-            )
+            WeatherInfo()
+
             // Tasks for Today
             Spacer(Modifier.height(8.dp))
             SectionHeader("Nhiệm vụ trong ngày", {})
