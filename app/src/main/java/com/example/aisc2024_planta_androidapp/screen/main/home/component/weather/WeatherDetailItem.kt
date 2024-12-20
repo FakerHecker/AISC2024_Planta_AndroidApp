@@ -1,4 +1,4 @@
-package com.example.aisc2024_planta_androidapp.screen.main.home.component
+package com.example.aisc2024_planta_androidapp.screen.main.home.component.weather
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background

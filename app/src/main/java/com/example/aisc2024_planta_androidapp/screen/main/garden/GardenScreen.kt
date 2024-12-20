@@ -76,10 +76,12 @@ fun GardenScreen() {
     }
 }
 
-@Preview
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyPlantCard(modifier: Modifier = Modifier) {
+fun MyPlantCard(start: String,
+                end: String,
+                modifier: Modifier = Modifier) {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
 
@@ -121,14 +123,14 @@ fun MyPlantCard(modifier: Modifier = Modifier) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.Bottom,
                     ) {
-                        Text("10",
+                        Text(start,
                             style = typography.titleMedium.copy(
                                 brush = colorScheme.primaryGradient,
                             ),
                             modifier = Modifier.alignByBaseline()
                         )
 
-                        Text("/45 ngày",
+                        Text(end,
                             style = typography.labelSmall.copy(
                                 brush = colorScheme.primaryGradient,
                             ),
@@ -279,7 +281,7 @@ fun MyGardenSection() {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            MyPlantCard(Modifier.fillMaxWidth())
+            MyPlantCard("10", "/45 ngày", Modifier.fillMaxWidth())
         }
     }
 }

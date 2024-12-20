@@ -19,7 +19,7 @@ import com.example.aisc2024_planta_androidapp.screen.main.home.component.Section
 import com.example.aisc2024_planta_androidapp.screen.main.home.component.NewsSection
 import com.example.aisc2024_planta_androidapp.screen.main.home.component.RecommendationSection
 import com.example.aisc2024_planta_androidapp.screen.main.home.component.SearchBarHomeScreen
-import com.example.aisc2024_planta_androidapp.screen.main.home.component.WeatherInfo
+import com.example.aisc2024_planta_androidapp.screen.main.home.component.weather.WeatherInfo
 
 @Composable
 fun HomeScreen(nestedScrollConnection: NestedScrollConnection) {
@@ -40,8 +40,7 @@ fun HomeScreen(nestedScrollConnection: NestedScrollConnection) {
                 modifier = Modifier.padding(vertical = 16.dp)
             )
             WeatherInfo(
-                temperature = "34°",
-                isSunny = false
+
             )
             // Tasks for Today
             Spacer(Modifier.height(8.dp))

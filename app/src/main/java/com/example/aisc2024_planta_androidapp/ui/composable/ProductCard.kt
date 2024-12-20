@@ -1,5 +1,6 @@
 package com.example.aisc2024_planta_androidapp.ui.composable
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -30,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,7 @@ import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAp
 
 @Composable
 fun ProductCard(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     OutlinedCard(
         colors = CardDefaults.cardColors()
             .copy(containerColor = colorScheme.surfaceContainerHigh),
@@ -67,7 +70,7 @@ fun ProductCard(modifier: Modifier = Modifier) {
                         Color(0xFF04CB01)
                     ))
                 ))
-                OutlinedIconButton(onClick = { /*TODO*/ },
+                OutlinedIconButton(onClick = {},
                     border = BorderStroke(1.dp, colorScheme.outline),
                     modifier = Modifier.size(40.dp)
                 ) {
