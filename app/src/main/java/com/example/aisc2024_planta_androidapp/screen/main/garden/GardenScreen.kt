@@ -62,7 +62,7 @@ import com.example.aisc2024_planta_androidapp.ui.layout_util.FixedGrid
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
 
 @Composable
-fun GardenScreen(navController: NavHostController) {
+fun GardenScreen() {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
