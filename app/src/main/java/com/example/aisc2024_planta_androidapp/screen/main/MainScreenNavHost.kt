@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.aisc2024_planta_androidapp.AppRoute
+import com.example.aisc2024_planta_androidapp.screen.main.garden.GardenNavHost
 import com.example.aisc2024_planta_androidapp.screen.main.garden.GardenScreen
 import com.example.aisc2024_planta_androidapp.screen.main.home.HomeScreen
 
@@ -39,11 +40,13 @@ fun MainScreenNavHost(
             }
             HomeScreen(nestedScrollConnection)
         }
+
         composable(AppRoute.Garden.name) {
             LaunchedEffect(Unit) {
                 onTitleChange("Vườn cây \uD83E\uDEB4")
             }
-            GardenScreen()
+            // Use GardenNavHost here
+            GardenNavHost(navController = navController)
         }
     }
 }

@@ -17,6 +17,7 @@ materialIconsExtended = "1.7.6"
 navigationCompose = "2.8.5"
 navigationRuntimeKtx = "2.8.5"
 roomRuntimeAndroid = "2.7.0-alpha12"
+navigationTesting = "2.8.5"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -46,6 +47,7 @@ androidx-datastore-core-android = { group = "androidx.datastore", name = "datast
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationTesting" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

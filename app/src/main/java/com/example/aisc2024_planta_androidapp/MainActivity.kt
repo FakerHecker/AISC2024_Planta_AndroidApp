@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 enum class AppRoute {
     Login, Scan, ScanResult, ScanDiagnose,
     HomeScreen, Garden,
-    Account
+    Account, InfoCardGarden
 }
 
 @Composable

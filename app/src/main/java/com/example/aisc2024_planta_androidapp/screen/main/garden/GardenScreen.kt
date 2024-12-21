@@ -54,6 +54,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.PopupProperties
+import androidx.navigation.NavHostController
 import com.example.aisc2024_planta_androidapp.R
 import com.example.aisc2024_planta_androidapp.screen.main.component.DailyTaskSection
 import com.example.aisc2024_planta_androidapp.screen.main.garden.component.PremiumAdsCard
@@ -61,7 +62,7 @@ import com.example.aisc2024_planta_androidapp.ui.layout_util.FixedGrid
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
 
 @Composable
-fun GardenScreen() {
+fun GardenScreen(navController: NavHostController) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -228,7 +229,9 @@ fun MyPlantCard(start: String,
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
 
-                    BottomSheetItem(iconId = R.drawable.ic_filter_vintage, title = "Thông tin cây trồng", onClick = { })
+                    BottomSheetItem(iconId = R.drawable.ic_filter_vintage, title = "Thông tin cây trồng", onClick = {
+                        // navController.navigate(GardenRoute.PlantInfoScreen.name)
+                    })
                     BottomSheetItem(iconId = R.drawable.ic_cancel, title = "Xóa cây trồng ra khỏi vườn", onClick = {})
                 }
             }
