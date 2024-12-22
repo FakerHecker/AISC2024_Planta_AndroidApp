@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.aisc2024_planta_androidapp.screen.main.component.DailyTaskSection
 import com.example.aisc2024_planta_androidapp.screen.main.home.component.SectionHeader
@@ -63,3 +64,4 @@ fun HomeScreen(nestedScrollConnection: NestedScrollConnection) {
         // TODO: move recommendation items here
     }
 }
+

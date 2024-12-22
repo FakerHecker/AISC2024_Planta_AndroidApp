@@ -293,6 +293,18 @@ fun MyGardenSection(onNavigateToPlantInfo: () -> Unit) {
             {
                 // New MyPlantCard at the beginning
                 MyPlantCard("0", "/45 ngày", onNavigateToPlantInfo, Modifier.fillMaxWidth())
+            } else if (index == 1)
+            {
+                MyPlantCard("5", "/45 ngày", onNavigateToPlantInfo, Modifier.fillMaxWidth())
+            } else if (index == 2)
+            {
+                MyPlantCard("8", "/45 ngày", onNavigateToPlantInfo, Modifier.fillMaxWidth())
+            } else if (index == 3)
+            {
+                MyPlantCard("12", "/45 ngày", onNavigateToPlantInfo, Modifier.fillMaxWidth())
+            } else if (index == 4)
+            {
+                MyPlantCard("15", "/45 ngày", onNavigateToPlantInfo, Modifier.fillMaxWidth())
             } else
             {
                 MyPlantCard("10", "/45 ngày", onNavigateToPlantInfo, Modifier.fillMaxWidth())
