@@ -1,10 +1,9 @@
-package com.example.aisc2024_planta_androidapp.screen.main.garden.component
+package com.example.aisc2024_planta_androidapp.screen
 
 import com.example.aisc2024_planta_androidapp.screen.scan_result.info.component.InfoCard
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +32,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedIconToggleButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,22 +50,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.aisc2024_planta_androidapp.R
 import com.example.aisc2024_planta_androidapp.ui.layout_util.FixedGrid
-import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
 import com.example.aisc2024_planta_androidapp.ui.theme.Typography
 
 
 @Composable
-fun InfoCardGarden() {
-    OutlinedCard(
-        colors = CardDefaults.cardColors()
-            .copy(containerColor = colorScheme.surfaceContainerHigh),
-        modifier = Modifier.fillMaxWidth()
-    ) { Box(Modifier.fillMaxWidth()) {
+fun PlantInfoScreen() {
+    Scaffold { Box(Modifier.fillMaxWidth().padding(it)) {
         Column(
             Modifier
                 .padding(16.dp)

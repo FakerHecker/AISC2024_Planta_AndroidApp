@@ -19,6 +19,7 @@ import com.example.aisc2024_planta_androidapp.screen.main.home.HomeScreen
 fun MainScreenNavHost(
     navController: NavHostController,
     nestedScrollConnection: NestedScrollConnection,
+    onNavigateToPlantInfo: () -> Unit,
     onTitleChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -45,7 +46,7 @@ fun MainScreenNavHost(
                 onTitleChange("Vườn cây \uD83E\uDEB4")
             }
             // Use GardenNavHost here
-            GardenScreen()
+            GardenScreen(onNavigateToPlantInfo)
         }
     }
 }

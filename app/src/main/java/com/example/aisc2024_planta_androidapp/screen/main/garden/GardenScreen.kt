@@ -62,7 +62,7 @@ import com.example.aisc2024_planta_androidapp.ui.layout_util.FixedGrid
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
 
 @Composable
-fun GardenScreen() {
+fun GardenScreen(onNavigateToPlantInfo: () -> Unit) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -73,7 +73,7 @@ fun GardenScreen() {
         PremiumAdsCard()
         Spacer(Modifier.height(16.dp))
         DailyTaskSection()
-        MyGardenSection()
+        MyGardenSection(onNavigateToPlantInfo)
     }
 }
 
@@ -82,6 +82,7 @@ fun GardenScreen() {
 @Composable
 fun MyPlantCard(start: String,
                 end: String,
+                onNavigateToPlantInfo: () -> Unit,
                 modifier: Modifier = Modifier) {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -228,9 +229,8 @@ fun MyPlantCard(start: String,
                 Column (
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
-
                     BottomSheetItem(iconId = R.drawable.ic_filter_vintage, title = "Thông tin cây trồng", onClick = {
-                        // navController.navigate(GardenRoute.PlantInfoScreen.name)
+                        onNavigateToPlantInfo()
                     })
                     BottomSheetItem(iconId = R.drawable.ic_cancel, title = "Xóa cây trồng ra khỏi vườn", onClick = {})
                 }
@@ -263,7 +263,7 @@ fun BottomSheetItem(iconId: Int, title: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun MyGardenSection() {
+fun MyGardenSection(onNavigateToPlantInfo: () -> Unit) {
     Column {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -289,10 +289,10 @@ fun MyGardenSection() {
             if (index == 0)
             {
                 // New MyPlantCard at the beginning
-                MyPlantCard("0", "/45 ngày", Modifier.fillMaxWidth())
+                MyPlantCard("0", "/45 ngày", onNavigateToPlantInfo, Modifier.fillMaxWidth())
             } else
             {
-                MyPlantCard("10", "/45 ngày", Modifier.fillMaxWidth())
+                MyPlantCard("10", "/45 ngày", onNavigateToPlantInfo, Modifier.fillMaxWidth())
             }
         }
     }

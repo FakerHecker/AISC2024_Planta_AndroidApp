@@ -22,6 +22,7 @@ import com.example.aisc2024_planta_androidapp.screen.main.component.MainScreenTo
 fun MainScreen(
     onScan: () -> Unit,
     onNavigateToProfile: () -> Unit,
+    onNavigateToPlantInfo: () -> Unit,
     navController: NavHostController = rememberNavController()
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -45,6 +46,7 @@ fun MainScreen(
         MainScreenNavHost(
             navController,
             scrollBehavior.nestedScrollConnection,
+            onNavigateToPlantInfo,
             onTitleChange = { titleBarText = it },
             modifier = Modifier.padding(innerPadding)
         )
