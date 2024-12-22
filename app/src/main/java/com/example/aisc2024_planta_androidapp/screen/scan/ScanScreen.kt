@@ -97,6 +97,8 @@ fun ScanScreen(
         // TODO: Handle the selected media item.
         if (uri != null) {
             Log.d("PhotoPicker", "Selected URI: $uri")
+            showLoading = true
+
         } else {
             Log.d("PhotoPicker", "No media selected")
         }
