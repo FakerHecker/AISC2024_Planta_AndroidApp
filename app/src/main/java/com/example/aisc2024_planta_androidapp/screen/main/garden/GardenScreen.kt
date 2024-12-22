@@ -62,7 +62,10 @@ import com.example.aisc2024_planta_androidapp.ui.layout_util.FixedGrid
 import com.example.aisc2024_planta_androidapp.ui.theme.primaryGradient
 
 @Composable
-fun GardenScreen(onNavigateToPlantInfo: () -> Unit) {
+fun GardenScreen(
+    onNavigateToPlantInfo: () -> Unit,
+    onNavigateUpgrade: () -> Unit
+) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -70,7 +73,7 @@ fun GardenScreen(onNavigateToPlantInfo: () -> Unit) {
             .verticalScroll(scrollState)
             .padding(horizontal = 16.dp)
     ) {
-        PremiumAdsCard()
+        PremiumAdsCard(onNavigateUpgrade)
         Spacer(Modifier.height(16.dp))
         DailyTaskSection()
         MyGardenSection(onNavigateToPlantInfo)

@@ -28,8 +28,8 @@ import com.example.aisc2024_planta_androidapp.R
 
 @Composable
 fun PremiumAdsCard(
+    onClick: () -> Unit,
     userName: String = "Plantie",
-    onClick: () -> Unit = {},
 ) {
     OutlinedCard(
         colors = CardDefaults.cardColors(

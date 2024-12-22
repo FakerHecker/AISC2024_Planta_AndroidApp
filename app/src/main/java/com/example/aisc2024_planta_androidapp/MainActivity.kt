@@ -23,6 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.aisc2024_planta_androidapp.screen.PlantInfoScreen
 import com.example.aisc2024_planta_androidapp.screen.account.AccountScreen
+import com.example.aisc2024_planta_androidapp.screen.account.upgrade.UpgradePremiumScreen
 import com.example.aisc2024_planta_androidapp.screen.auth.login.LoginScreen
 import com.example.aisc2024_planta_androidapp.screen.main.MainScreen
 import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAppTheme
@@ -46,7 +47,7 @@ class MainActivity : ComponentActivity() {
 enum class AppRoute {
     Login, Scan, ScanResult, ScanDiagnose,
     HomeScreen, Garden,
-    Account, PlantInfo
+    Account, PlantInfo, Upgrade
 }
 
 @Composable
@@ -77,6 +78,7 @@ fun AppMainScreen(
         composable(AppRoute.HomeScreen.name) {
             MainScreen(
                 onScan = { navController.navigate(AppRoute.Scan.name) },
+                onNavigateUpgrade = { navController.navigate(AppRoute.Upgrade.name)},
                 onNavigateToProfile = { navController.navigate(AppRoute.Account.name) },
                 onNavigateToPlantInfo = { navController.navigate(AppRoute.PlantInfo.name) }
             )
@@ -99,10 +101,13 @@ fun AppMainScreen(
             )
         }
         composable(AppRoute.Account.name) {
-            AccountScreen()
+            AccountScreen(onNavigateUpgrade = { navController.navigate(AppRoute.Upgrade.name) })
         }
         composable(AppRoute.PlantInfo.name) {
             PlantInfoScreen()
+        }
+        composable(AppRoute.Upgrade.name) {
+            UpgradePremiumScreen { navController.navigateUp() }
         }
     }
 }

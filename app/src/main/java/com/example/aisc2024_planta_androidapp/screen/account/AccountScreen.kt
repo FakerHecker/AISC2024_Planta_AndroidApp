@@ -25,7 +25,7 @@ import com.example.aisc2024_planta_androidapp.R
 import com.example.aisc2024_planta_androidapp.component.effect.StatusBarColorEffect
 
 @Composable
-fun AccountScreen() {
+fun AccountScreen(onNavigateUpgrade: () -> Unit) {
     StatusBarColorEffect(toDark = false)
     Surface {
         Column(
@@ -33,7 +33,7 @@ fun AccountScreen() {
         ) {
             ProfileHeader()
             Spacer(modifier = Modifier.height(16.dp))
-            StatsSection()
+            StatsSection(onNavigateUpgrade)
             Spacer(modifier = Modifier.height(16.dp))
             UtilitiesSection()
             Spacer(modifier = Modifier.height(16.dp))
@@ -116,7 +116,7 @@ fun ProfileHeader() {
 }
 
 @Composable
-fun StatsSection() {
+fun StatsSection(onNavigateUpgrade: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -125,7 +125,7 @@ fun StatsSection() {
     ) {
         StatCard("Gói người dùng", "Free", "Xem đặc quyền >", R.drawable.member_card, null)
         {
-            // Clickable
+            onNavigateUpgrade()
         }
         StatCard("Tích điểm", "1,200", "Tìm thêm điểm >", R.drawable.img_points, R.drawable.ic_point)
         {

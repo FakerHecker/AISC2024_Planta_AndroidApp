@@ -1,6 +1,5 @@
 package com.example.aisc2024_planta_androidapp.screen.account.upgrade
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -8,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,12 +26,12 @@ import com.example.aisc2024_planta_androidapp.ui.theme.AISC2024_Planta_AndroidAp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpgradePremiumScreen(onBack: () -> Unit) {
+fun UpgradePremiumScreen(onNavigateUp: () -> Unit) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         topBar = { TopAppBar(
             title = { Text("Nâng cấp tài khoản") },
-            navigationIcon = { IconButton(onClick = onBack) {
+            navigationIcon = { IconButton(onClick = onNavigateUp) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
             }},
             scrollBehavior = scrollBehavior

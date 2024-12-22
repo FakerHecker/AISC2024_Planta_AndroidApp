@@ -20,6 +20,7 @@ fun MainScreenNavHost(
     navController: NavHostController,
     nestedScrollConnection: NestedScrollConnection,
     onNavigateToPlantInfo: () -> Unit,
+    onNavigateUpgrade: () -> Unit,
     onTitleChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -46,7 +47,10 @@ fun MainScreenNavHost(
                 onTitleChange("Vườn cây \uD83E\uDEB4")
             }
             // Use GardenNavHost here
-            GardenScreen(onNavigateToPlantInfo)
+            GardenScreen(
+                onNavigateToPlantInfo,
+                onNavigateUpgrade
+            )
         }
     }
 }
