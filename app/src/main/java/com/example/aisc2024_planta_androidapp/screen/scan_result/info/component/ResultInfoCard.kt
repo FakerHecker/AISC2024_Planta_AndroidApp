@@ -59,7 +59,7 @@ fun ResultInfoCard(modifier: Modifier = Modifier) {
                 .fillMaxWidth()) {
             // switch to horizontal pager
             Image(
-                painter = painterResource(R.drawable.fake_result_plant),
+                painter = painterResource(R.drawable.trau_ba),
                 contentDescription = "Plant",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -68,21 +68,21 @@ fun ResultInfoCard(modifier: Modifier = Modifier) {
                     .clip(RoundedCornerShape(8.dp))
             )
             Spacer(Modifier.height(20.dp))
-            Text("Cây đậu phộng", style = typography.titleLarge)
+            Text("Cây trầu bà", style = typography.titleLarge)
             Spacer(Modifier.height(2.dp))
-            Text("(Goober peas)", style = typography.bodyMedium)
+            Text("(Epipremnum aureum)", style = typography.bodyMedium)
             Spacer(Modifier.height(8.dp))
             Row {
                 Text("Danh mục:", style = typography.labelMedium)
                 Spacer(Modifier.width(4.dp))
-                Text("Ngoài trời", style = typography.bodySmall)
+                Text("Trong nhà - Háo nước", style = typography.bodySmall)
             }
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("45 ngày", style = typography.headlineSmall.copy(
+                Text("2 năm", style = typography.headlineSmall.copy(
                     brush = Brush.linearGradient(
                         colors = listOf(Color(0xFF059710), Color(0xFF04CB01)),
                     )
@@ -104,7 +104,7 @@ fun ResultInfoCard(modifier: Modifier = Modifier) {
             Spacer(Modifier.height(8.dp))
 
             val cards: List<Triple<Painter, String, String>> = listOf(
-                Triple(painterResource(R.drawable.icon_sun), "Ánh sáng", "Bán phần"),
+                Triple(painterResource(R.drawable.icon_sun), "Ánh sáng", "Ưa râm"),
                 Triple(painterResource(R.drawable.icon_humidity_mid), "Độ ẩm", "50-60%"),
                 Triple(painterResource(R.drawable.icon_water), "Tưới nước", "2 ngày/lần"),
                 Triple(painterResource(R.drawable.icon_soil), "Bón phân", "3 tháng/lần")
