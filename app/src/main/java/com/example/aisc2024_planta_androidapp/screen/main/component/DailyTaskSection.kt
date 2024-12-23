@@ -71,7 +71,7 @@ fun DailyTaskSection(
                     color = colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    text = "21/08/2024",
+                    text = "23/12/2024",
                     style = typography.titleMedium.copy(
                         brush = colorScheme.primaryGradient
                     ),
