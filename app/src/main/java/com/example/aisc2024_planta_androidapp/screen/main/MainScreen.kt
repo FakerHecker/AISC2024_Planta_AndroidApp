@@ -79,6 +79,7 @@ fun MainScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     var titleBarText by rememberSaveable { mutableStateOf("Chào Plantie 🍀") }
     Scaffold(
+        containerColor = colorScheme.surfaceContainer,
         topBar = {
             MainScreenTopBar(
                 title = titleBarText,
@@ -92,9 +93,9 @@ fun MainScreen(
                 onScan = onScan
             )
         },
-        floatingActionButton = {
-            onClickIconAdd()
-        },
+//        floatingActionButton = {
+//            onClickIconAdd()
+//        },
     ) { innerPadding ->
         MainScreenNavHost(
             navController,
@@ -107,108 +108,4 @@ fun MainScreen(
     }
 }
 
-@Composable
-fun onClickIconAdd(){
-    var expanded by remember { mutableStateOf(value = false) }
-    val items = listOf(
-        MiniFabItems(R.drawable.icon_plant_outlined, colorScheme.primary, "Thêm cây", false, "Số cây trong vườn đã đầy!"),
-        MiniFabItems(R.drawable.icon_doc, colorScheme.primary,"Xuất báo cáo", true, "Bạn đã tạo báo cáo thành công!"),
-        MiniFabItems(R.drawable.icon_google_calendar, Color.Unspecified, "Thêm lịch vào Google Calendar", true, "Bạn đã thêm lịch vào báo cáo thành công!")
-    )
 
-    val transition = updateTransition(targetState = expanded, label = "transition")
-    val rotation by transition.animateFloat(label = "rotation") {
-        if (it) 315f else 0f
-    }
-
-    Column(horizontalAlignment = Alignment.End) {
-        if(expanded){
-            AnimatedVisibility(
-                visible = expanded,
-                enter = fadeIn() + slideInVertically(initialOffsetY = { it }) + expandVertically(),
-                exit = fadeOut() + slideOutVertically(targetOffsetY = { it }) + shrinkVertically()
-            ) {
-                LazyColumn(horizontalAlignment = Alignment.End) {
-                    items(items.size) {
-                        ItemUi(image = items[it].image, tint = items[it].color, title = items[it].title, premium = items[it].premium, notification = items[it].notification)
-                        Spacer(modifier = Modifier.height(10.dp))
-                    }
-                }
-            }
-        }
-
-        FloatingActionButton(
-            onClick = { expanded = !expanded },
-            modifier = Modifier.rotate(rotation).size(56.dp),
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-            shape = CircleShape,
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_add), // Thay thế bằng icon scan của bạn
-                contentDescription = "Scan",
-                tint = colorScheme.primary
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ItemUi(image: Int, tint: Color, title: String, premium: Boolean = false, notification: String) {
-    var showDialog by remember { mutableStateOf(false) } // State to control dialog visibility
-
-    FloatingActionButton(
-        onClick = { showDialog = true }, // Show the dialog on click
-        modifier = Modifier.height(40.dp),
-        containerColor = colorScheme.surfaceContainer,
-        shape = CircleShape
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End,
-            modifier = Modifier.padding(horizontal = 10.dp)
-        ) {
-            Icon(painter = painterResource(id = image), tint = tint, contentDescription = "")
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(text = title, color = colorScheme.primary, style = typography.labelLarge)
-            Spacer(modifier = Modifier.size(10.dp))
-            if (premium) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_stars),
-                    tint = Color(0xFFFFCE0A),
-                    contentDescription = ""
-                )
-            }
-        }
-    }
-
-    // AlertDialog composable
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false }, // Hide dialog when dismissed
-            title = { Text("Thông báo") },
-            text = { Text(notification) },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        // Handle confirm action
-                        showDialog = false
-                    }
-                ) {
-                    Text("OK")
-                }
-            },
-        )
-    }
-}
-
-
-
-
-data class MiniFabItems(
-    val image: Int,
-    val color: Color,
-    val title: String,
-    val premium: Boolean,
-    val notification: String
-)
